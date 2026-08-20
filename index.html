@@ -1,0 +1,2358 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZAT Supermarket & CoinMart | AI Autonomous Grocery</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        zat: {
+                            bg: '#08090e',
+                            card: '#121624',
+                            cardBorder: '#232a3e',
+                            emerald: '#3B82F6',
+                            emeraldLight: '#818CF8',
+                            emeraldBg: 'rgba(59, 130, 246, 0.12)',
+                            orange: '#EF4444',
+                            orangeHover: '#DC2626',
+                            gold: '#F59E0B',
+                            goldLight: '#FDE68A',
+                            goldMuted: 'rgba(245, 158, 11, 0.15)',
+                            textMain: '#F3F4F6',
+                            textMuted: '#9CA3AF',
+                            badge: '#1F2937',
+                            purple: '#A855F7',
+                            purpleBg: 'rgba(168, 85, 247, 0.15)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08090e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #232a3e;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4285F4;
+        }
+        
+        body {
+            background-color: #08090e;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(66, 133, 244, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 50% 75%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 85%, rgba(14, 165, 233, 0.1) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .luxury-card {
+            background: rgba(18, 22, 36, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .luxury-card:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px -10px rgba(124, 58, 237, 0.25), 0 0 15px rgba(66, 133, 244, 0.15);
+        }
+
+        .gemini-gradient-text {
+            background: linear-gradient(135deg, #A8C7FA 0%, #C488F6 50%, #F43F5E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .shopee-badge {
+            background: linear-gradient(135deg, #FF4B4B 0%, #DC2626 100%);
+        }
+        
+        .fairprice-emerald {
+            background: linear-gradient(135deg, #4285F4 0%, #2563EB 50%, #7C3AED 100%);
+        }
+
+        .coin-gradient {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        }
+
+        .ai-purple-gradient {
+            background: linear-gradient(135deg, #4285F4 0%, #9B51E0 50%, #EC4899 100%);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @keyframes coin-bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-4px) rotate(8deg); }
+        }
+        .animate-coin {
+            animation: coin-bounce 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body id="home" class="bg-zat-bg text-zat-textMain font-sans min-h-screen flex flex-col pb-20 md:pb-0 selection:bg-zat-emerald selection:text-white antialiased">
+
+    <div class="bg-gradient-to-r from-blue-900/60 via-purple-900/40 to-slate-900/80 backdrop-blur-md text-white text-[11px] py-2 px-4 border-b border-white/10 font-medium">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3 overflow-hidden text-ellipsis whitespace-nowrap">
+                <span class="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider shadow">Shopee/FairPrice Express</span>
+                <span>⚡ <strong>30-Min Express Delivery</strong> or <strong>2-3 Min Bipedal Robot Pickup</strong></span>
+                <span class="hidden md:inline-block text-zat-gold font-bold">| Earn 10 ZAT Coins for every S$1 spent! 🪙</span>
+            </div>
+            
+            <div class="flex items-center space-x-4 text-[11px]">
+                <button onclick="openCoinModal()" class="flex items-center space-x-1.5 bg-zat-card/80 hover:bg-zat-card border border-zat-gold/40 px-2.5 py-0.5 rounded-full text-zat-gold font-bold transition shadow-sm">
+                    <i class="fa-solid fa-coins animate-coin text-zat-goldLight"></i>
+                    <span>ZAT Coins:</span>
+                    <span id="topBarCoinBalance" class="font-mono text-white">1,250</span>
+                </button>
+                <button onclick="claimDailyCheckIn()" id="topBarCheckInBtn" class="hidden sm:flex items-center space-x-1 bg-zat-goldMuted border border-zat-gold/30 text-zat-gold hover:bg-zat-gold hover:text-black font-bold px-2.5 py-0.5 rounded-full transition text-[10px]">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Daily +50 🪙</span>
+                </button>
+                <span class="hidden lg:flex items-center space-x-1.5 text-zat-emeraldLight font-mono text-[10px]">
+                    <i class="fa-solid fa-floppy-disk text-zat-gold animate-pulse"></i>
+                    <span id="autoSaveText" class="font-bold">Auto-Saved</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <header class="sticky top-0 z-40 bg-zat-bg/80 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center justify-between gap-3">
+                
+                <!-- Brand Logo -->
+                <a href="#home" class="flex items-center space-x-2.5 flex-shrink-0">
+                    <div class="w-10 h-10 fairprice-emerald rounded-2xl flex items-center justify-center text-white font-heading font-extrabold text-xl shadow-lg shadow-blue-500/20">
+                        Z
+                    </div>
+                    <div class="hidden sm:block">
+                        <div class="flex items-center space-x-1.5">
+                            <span class="font-heading font-black text-2xl tracking-tight text-white">ZAT</span>
+                            <span class="shopee-badge text-white text-[9px] font-bold px-1.5 py-0.2 rounded uppercase tracking-wider">Mart & Coin</span>
+                        </div>
+                        <p class="text-[10px] text-zat-textMuted tracking-wider font-medium">AI Autonomous & Food Rescue</p>
+                    </div>
+                </a>
+
+                <!-- Fulfillment Toggle -->
+                <div class="hidden lg:flex items-center bg-zat-card/80 border border-white/10 p-1 rounded-2xl flex-shrink-0 text-xs backdrop-blur-md">
+                    <button id="modeDeliveryBtn" onclick="setFulfillmentMode('delivery')" class="flex items-center space-x-2 px-3 py-1.5 rounded-xl font-bold transition fairprice-emerald text-white shadow">
+                        <i class="fa-solid fa-motorcycle text-xs"></i>
+                        <span>Express (30m)</span>
+                    </button>
+                    <button id="modePickupBtn" onclick="setFulfillmentMode('pickup')" class="flex items-center space-x-2 px-3 py-1.5 rounded-xl font-medium text-zat-textMuted hover:text-white transition">
+                        <i class="fa-solid fa-robot text-xs"></i>
+                        <span>Robot Locker</span>
+                    </button>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="flex-grow max-w-xl relative">
+                    <div class="relative flex items-center">
+                        <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Search Japanese Strawberries, Wagyu, Eggs, Salmon..." class="w-full pl-10 pr-24 py-2.5 bg-zat-card/90 border border-white/10 rounded-2xl text-xs text-white placeholder-zat-textMuted focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition shadow-inner">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 text-zat-textMuted text-sm"></i>
+                        <button onclick="filterProducts()" class="absolute right-1.5 shopee-badge hover:bg-zat-orangeHover text-white px-3.5 py-1.5 rounded-xl text-xs font-bold transition shadow">
+                            Search
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Actions: AI Scanner, Hub & Cart -->
+                <div class="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
+                    <button onclick="openAiModal()" class="ai-purple-gradient text-white hover:opacity-90 px-3 py-2 rounded-2xl text-xs font-bold flex items-center space-x-1.5 shadow-lg shadow-purple-500/20 transition">
+                        <i class="fa-solid fa-wand-magic-sparkles text-zat-gold"></i>
+                        <span class="hidden md:inline">AI Dish Scanner</span>
+                    </button>
+
+                    <button onclick="openCoinModal()" class="hidden md:flex items-center space-x-1.5 bg-zat-card hover:bg-zat-cardBorder border border-zat-gold/40 px-3 py-2 rounded-2xl text-xs text-zat-gold font-bold transition">
+                        <i class="fa-solid fa-store text-zat-gold"></i>
+                        <span>CoinMart</span>
+                    </button>
+
+                    <button onclick="toggleHubDropdown()" class="hidden lg:flex items-center space-x-2 bg-zat-card hover:bg-zat-cardBorder border border-white/10 px-3 py-2 rounded-2xl text-xs text-white transition">
+                        <i class="fa-solid fa-location-dot text-zat-gold"></i>
+                        <div class="text-left leading-none">
+                            <span class="block text-[9px] text-zat-textMuted uppercase font-mono">SG Darkstore</span>
+                            <span id="selectedHubText" class="font-bold text-xs truncate max-w-[90px]">Jewel Changi</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-[10px] text-zat-textMuted ml-1"></i>
+                    </button>
+
+                    <button onclick="toggleCartDrawer()" class="relative fairprice-emerald hover:opacity-90 px-3.5 py-2.5 rounded-2xl font-bold text-xs flex items-center space-x-2 text-white shadow-lg shadow-blue-500/20 transition">
+                        <div class="relative">
+                            <i class="fa-solid fa-cart-shopping text-base"></i>
+                            <span id="cartBadgeCount" class="absolute -top-2 -right-2 bg-zat-orange text-white font-mono font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-zat-bg">0</span>
+                        </div>
+                        <span class="hidden sm:inline">Cart</span>
+                        <span id="cartHeaderTotal" class="hidden sm:inline font-mono text-zat-gold bg-black/20 px-2 py-0.5 rounded-lg">S$0.00</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="hubDropdown" class="hidden absolute right-20 top-16 w-80 bg-zat-card/95 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl py-3 z-50 divide-y divide-white/10">
+            <div class="px-5 py-2 text-[10px] font-mono uppercase tracking-wider text-zat-gold flex justify-between">
+                <span>Select SG Darkstore Hub</span>
+                <span>Robot Queue</span>
+            </div>
+            <div class="py-1">
+                <button onclick="selectHub('Jewel Changi Hub')" class="w-full text-left px-5 py-3 text-xs text-white hover:bg-purple-500/10 flex items-center justify-between transition">
+                    <div>
+                        <div class="font-bold text-sm text-white">Jewel Changi Flagship</div>
+                        <div class="text-[11px] text-zat-textMuted">#B2-210 Jewel Changi Airport</div>
+                    </div>
+                    <span class="text-[9px] bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded-full font-mono font-bold">~2 Mins</span>
+                </button>
+                <button onclick="selectHub('Orchard Gateway Hub')" class="w-full text-left px-5 py-3 text-xs text-white hover:bg-purple-500/10 flex items-center justify-between transition">
+                    <div>
+                        <div class="font-bold text-sm text-white">Orchard Gateway</div>
+                        <div class="text-[11px] text-zat-textMuted">#B1-08 Orchard Gateway</div>
+                    </div>
+                    <span class="text-[9px] bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded-full font-mono font-bold">~3 Mins</span>
+                </button>
+                <button onclick="selectHub('Tampines Hub Store')" class="w-full text-left px-5 py-3 text-xs text-white hover:bg-purple-500/10 flex items-center justify-between transition">
+                    <div>
+                        <div class="font-bold text-sm text-white">Our Tampines Hub</div>
+                        <div class="text-[11px] text-zat-textMuted">#01-14 Our Tampines Hub</div>
+                    </div>
+                    <span class="text-[9px] bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded-full font-mono font-bold">~2-3 Mins</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8 flex-grow">
+
+        <section class="space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Main Banner -->
+                <div class="lg:col-span-7 bg-gradient-to-br from-blue-950/80 via-slate-900/90 to-purple-950/70 border border-white/10 rounded-3xl p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between min-h-[240px] shadow-2xl backdrop-blur-xl">
+                    <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -left-10 -top-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <div class="space-y-3 relative z-10 max-w-lg">
+                        <div class="inline-flex items-center space-x-2 bg-blue-500/20 border border-blue-400/30 text-blue-300 text-[11px] font-bold px-3 py-1 rounded-full">
+                            <i class="fa-solid fa-bolt text-zat-gold"></i>
+                            <span>ZAT Super Saver Food Rescue & AI Grocery</span>
+                        </div>
+                        <h1 class="text-2xl sm:text-4xl font-heading font-extrabold text-white leading-tight">
+                            Fresh Organic Produce <br>
+                            <span class="gemini-gradient-text">Up to 70% OFF Today</span>
+                        </h1>
+                        <p class="text-xs text-zat-textMuted leading-relaxed">
+                            Zero food waste, 100% inspected freshness. Assembled by Gemini-powered autonomous bipedal robots with ambient pick-and-place tracking.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 flex flex-wrap items-center gap-3 relative z-10">
+                        <button onclick="claimVoucher('ZATEXPRESS5')" class="shopee-badge text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center space-x-2 shadow-lg hover:opacity-90 transition">
+                            <i class="fa-solid fa-ticket"></i>
+                            <span>Claim S$5 Express Voucher</span>
+                        </button>
+                        <a href="#flash-deals" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-4 py-2 rounded-xl text-xs backdrop-blur transition flex items-center space-x-1.5 border border-white/10">
+                            <span>Browse Flash Deals</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 bg-zat-card/90 border border-white/10 rounded-3xl p-5 shadow-2xl flex flex-col justify-between space-y-3 backdrop-blur-xl">
+                    <div class="flex items-center justify-between pb-2 border-b border-white/10">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse shadow-sm shadow-purple-400"></span>
+                            <span class="font-heading font-bold text-sm text-white">Gemini Darkstore Robotics</span>
+                        </div>
+                        <button onclick="toggleRobotModal()" class="text-[10px] bg-zat-card hover:bg-zat-cardBorder text-purple-300 border border-purple-400/30 px-2.5 py-1 rounded-full font-mono font-bold flex items-center space-x-1.5 transition">
+                            <i class="fa-solid fa-expand text-[9px]"></i>
+                            <span>Inspect Robotics</span>
+                        </button>
+                    </div>
+
+                    <!-- Status Tracker Section -->
+                    <div class="bg-zat-bg/80 p-3.5 rounded-2xl border border-white/10 space-y-2.5">
+                        <div class="flex justify-between items-center text-[10px] font-mono">
+                            <div class="flex items-center space-x-1.5">
+                                <span class="text-zat-textMuted uppercase">SYSTEM STATUS:</span>
+                                <span id="currentStepName" class="text-purple-300 font-bold uppercase tracking-wider">Ready & Operational</span>
+                            </div>
+                            <div class="flex items-center space-x-1 bg-purple-500/10 border border-purple-500/30 text-purple-300 px-2 py-0.5 rounded-full text-[10px] font-bold">
+                                <i class="fa-solid fa-circle-check text-[9px]"></i>
+                                <span>Gemini Powered</span>
+                            </div>
+                        </div>
+
+                        <!-- Est. Order Preparation Timer Status -->
+                        <div class="flex items-center justify-between text-[10px] bg-blue-950/40 border border-blue-500/20 px-2.5 py-1.5 rounded-xl text-blue-200">
+                            <span class="flex items-center space-x-1.5 font-bold">
+                                <i class="fa-solid fa-stopwatch text-zat-gold animate-pulse"></i>
+                                <span>Est. Prep Timer Status:</span>
+                            </span>
+                            <span id="estPrepTimerStatus" class="font-mono font-bold text-zat-gold">01m 45s Remaining</span>
+                        </div>
+                        
+                        <!-- 4 Step Dots -->
+                        <div class="grid grid-cols-4 gap-2 items-center pt-1">
+                            <div id="step-dot-1" class="h-2 rounded-full bg-blue-500/40 transition-all duration-300" title="Step 1: Verified"></div>
+                            <div id="step-dot-2" class="h-2 rounded-full bg-blue-500/40 transition-all duration-300" title="Step 2: Picked"></div>
+                            <div id="step-dot-3" class="h-2 rounded-full bg-blue-500/40 transition-all duration-300" title="Step 3: Packed"></div>
+                            <div id="step-dot-4" class="h-2 rounded-full bg-purple-400 shadow-sm shadow-purple-500/50 transition-all duration-300" title="Step 4: Ready"></div>
+                        </div>
+
+                        <!-- 4 Step Labels Grid -->
+                        <div class="grid grid-cols-4 text-[9px] font-mono text-center">
+                            <span id="step-lbl-1" class="text-zat-textMuted">1. Verified</span>
+                            <span id="step-lbl-2" class="text-zat-textMuted">2. Picked</span>
+                            <span id="step-lbl-3" class="text-zat-textMuted">3. Packed</span>
+                            <span id="step-lbl-4" class="text-purple-300 font-bold">4. Ready</span>
+                        </div>
+
+                        <div class="flex items-center justify-between text-[10px] text-zat-textMuted pt-1 border-t border-white/10">
+                            <span class="truncate">Demonstrating Item: <strong id="activeItemName" class="text-white font-semibold">Seng Choon Farm Fresh Eggs</strong></span>
+                            <span id="liveProgressTimer" class="font-mono font-bold text-blue-300">Status: READY</span>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Robot Arm Simulation -->
+                    <div class="relative w-full h-32 rounded-2xl overflow-hidden bg-black/60 border border-white/10 flex items-center justify-center group shadow-inner">
+                        <canvas id="robotCanvas" class="w-full h-full block bg-transparent"></canvas>
+
+                        <div class="absolute bottom-2 left-2 text-[9px] font-mono text-zat-textMuted bg-black/80 backdrop-blur px-2 py-0.5 rounded-md border border-white/10" id="robotUnitLabel">
+                            Gemini Bipedal Robot • Jewel Changi Hub
+                        </div>
+                    </div>
+
+                    <div class="text-[10px] text-zat-textMuted flex items-center justify-between bg-zat-bg/80 p-2 rounded-xl border border-white/10">
+                        <span class="flex items-center space-x-1">
+                            <i class="fa-solid fa-snowflake text-cyan-400"></i>
+                            <span>Pod Climate Zone:</span>
+                        </span>
+                        <span id="darkstorePodTemp" class="font-mono font-bold text-blue-300">4°C Cold Chain Guard</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-4 sm:grid-cols-8 gap-3 sm:gap-4 pt-2">
+                <button onclick="setCategory('clearance')" class="flex flex-col items-center justify-center p-3 bg-zat-card/80 hover:bg-zat-cardBorder border border-white/10 rounded-2xl transition group backdrop-blur">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white text-lg shadow-md group-hover:scale-110 transition">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <span class="text-[11px] font-bold text-white mt-2 group-hover:text-zat-gold transition">Rescue 70%</span>
+                </button>
+
+                <button onclick="setCategory('produce')" class="flex flex-col items-center justify-center p-3 bg-zat-card/80 hover:bg-zat-cardBorder border border-white/10 rounded-2xl transition group backdrop-blur">
+                    <div class="w-11 h-11 rounded-2xl fairprice-emerald flex items-center justify-center text-white text-lg shadow-md group-hover:scale-110 transition">
+                        <i class="fa-solid fa-apple-whole"></i>
+                    </div>
+                    <span class="text-[11px] font-bold text-white mt-2 group-hover:text-blue-300 transition">Fresh Farm</span>
+                </button>
+
+                <button onclick="setCategory('dairy')" class="flex flex-col items-center justify-center p-3 bg-zat-card/80 hover:bg-zat-cardBorder border border-white/10 rounded-2xl transition group backdrop-blur">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-lg shadow-md group-hover:scale-110 transition">
+                        <i class="fa-solid fa-cow"></i>
+                    </div>
+                    <span class="text-[11px] font-bold text-white mt-2 group-hover:text-blue-400 transition">Chilled Dairy</span>
+                </button>
+
+                <button onclick="setCategory('bakery')" class="flex flex-col items-center justify-center p-3 bg-zat-card/80 hover:bg-zat-cardBorder border border-white/10 rounded-2xl transition group backdrop-blur">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-yellow-600 to-amber-700 flex items-center justify-center text-white text-lg shadow-md group-hover:scale-110 transition">
+                        <i class="fa-solid fa-bread-slice"></i>
+                    </div>
+                    <span class="text-[11px] font-bold text-white mt-2 group-hover:text-amber-400 transition">Fine Bakery</span>
+                </button>
+
+                <button onclick="setCategory('sg-local')" class="flex flex-col items-center justify-center p-3 bg-zat-card/80 hover:bg-zat-cardBorder border border-white/10 rounded-2xl transition group backdrop-blur">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-red-600 to-rose-700 flex items-center justify-center text-white text-lg shadow-md group-hover:scale-110 transition">
+                        <i class="fa-solid fa-flag"></i>
+                    </div>
+                    <span class="text-[11px] font-bold text-white mt-2 group-hover:text-rose-400 transition">Local SG</span>
+                </button>
+
+                <button onclick="openCoinModal()" class="flex flex-col items-center justify-center p-3 bg-zat-card/80 hover:bg-zat-cardBorder border border-white/10 rounded-2xl transition group backdrop-blur">
+                    <div class="w-11 h-11 rounded-2xl coin-gradient flex items-center justify-center text-white text-lg shadow-md group-hover:scale-110 transition">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <span class="text-[11px] font-bold text-white mt-2 group-hover:text-zat-gold transition">CoinMart</span>
+                </button>
+
+                <button onclick="openAiModal()" class="flex flex-col items-center justify-center p-3 bg-zat-card/80 hover:bg-zat-cardBorder border border-white/10 rounded-2xl transition group backdrop-blur">
+                    <div class="w-11 h-11 rounded-2xl ai-purple-gradient flex items-center justify-center text-white text-lg shadow-md group-hover:scale-110 transition">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <span class="text-[11px] font-bold text-white mt-2 group-hover:text-purple-300 transition">AI Dish</span>
+                </button>
+
+                <button onclick="setCategory('all')" class="flex flex-col items-center justify-center p-3 bg-zat-card/80 hover:bg-zat-cardBorder border border-white/10 rounded-2xl transition group backdrop-blur">
+                    <div class="w-11 h-11 rounded-2xl bg-slate-700 flex items-center justify-center text-white text-lg shadow-md group-hover:scale-110 transition">
+                        <i class="fa-solid fa-border-all"></i>
+                    </div>
+                    <span class="text-[11px] font-bold text-white mt-2 group-hover:text-gray-300 transition">All Aisles</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="flash-deals" class="bg-gradient-to-r from-red-950/60 via-slate-900/80 to-purple-950/60 border border-red-500/30 rounded-3xl p-5 shadow-2xl space-y-4 backdrop-blur-xl">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
+                <div class="flex items-center space-x-3">
+                    <div class="shopee-badge text-white px-3 py-1 rounded-xl flex items-center space-x-1.5 font-heading font-extrabold text-sm shadow">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>FLASH FOOD CLEARANCE</span>
+                    </div>
+                    <div class="flex items-center space-x-1 text-xs text-zat-textMuted font-mono">
+                        <span class="text-white font-bold">ENDS IN:</span>
+                        <span id="countdownHours" class="bg-black/60 text-zat-gold font-bold px-2 py-0.5 rounded border border-white/10">04</span>
+                        <span>:</span>
+                        <span id="countdownMins" class="bg-black/60 text-zat-gold font-bold px-2 py-0.5 rounded border border-white/10">28</span>
+                        <span>:</span>
+                        <span id="countdownSecs" class="bg-black/60 text-zat-gold font-bold px-2 py-0.5 rounded border border-white/10">45</span>
+                    </div>
+                </div>
+
+                <a href="#store" onclick="setCategory('clearance')" class="text-xs font-bold text-zat-orange hover:underline flex items-center space-x-1">
+                    <span>See All Flash Clearance</span>
+                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                </a>
+            </div>
+
+            <!-- Horizontal Scrollable Flash Items -->
+            <div id="flashDealsContainer" class="flex space-x-4 overflow-x-auto pb-2 no-scrollbar">
+                <!-- Dynamically populated by JavaScript -->
+            </div>
+        </section>
+
+        <section id="store" class="space-y-6">
+            
+            <!-- Category Navigation Tabs -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+                <div>
+                    <h2 class="text-2xl font-heading font-extrabold text-white">Curated Supermarket Aisles</h2>
+                    <p class="text-xs text-zat-textMuted mt-0.5">Select fresh produce or gourmet rescue items with instant robot assembly.</p>
+                </div>
+
+                <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1" id="categoryTabs">
+                    <button onclick="setCategory('all')" class="cat-btn fairprice-emerald text-white px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition shadow" data-cat="all">All Items</button>
+                    <button onclick="setCategory('clearance')" class="cat-btn bg-zat-card hover:bg-zat-cardBorder text-zat-orange border border-white/10 px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center space-x-1.5" data-cat="clearance">
+                        <i class="fa-solid fa-bolt text-zat-orange"></i>
+                        <span>Food Rescue</span>
+                    </button>
+                    <button onclick="setCategory('produce')" class="cat-btn bg-zat-card hover:bg-zat-cardBorder text-zat-textMuted border border-white/10 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition" data-cat="produce">Fresh Produce</button>
+                    <button onclick="setCategory('dairy')" class="cat-btn bg-zat-card hover:bg-zat-cardBorder text-zat-textMuted border border-white/10 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition" data-cat="dairy">Dairy & Chilled</button>
+                    <button onclick="setCategory('bakery')" class="cat-btn bg-zat-card hover:bg-zat-cardBorder text-zat-textMuted border border-white/10 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition" data-cat="bakery">Bakery</button>
+                    <button onclick="setCategory('sg-local')" class="cat-btn bg-zat-card hover:bg-zat-cardBorder text-zat-textMuted border border-white/10 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition" data-cat="sg-local">Local Farms</button>
+                </div>
+            </div>
+
+            <!-- Product Grid Container -->
+            <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Dynamically populated by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <div id="cartDrawerBackdrop" onclick="toggleCartDrawer()" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden opacity-0 transition-opacity duration-300"></div>
+
+    <aside id="cartDrawer" class="fixed right-0 top-0 bottom-0 w-full sm:w-96 bg-zat-bg/95 border-l border-white/10 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl backdrop-blur-2xl">
+        <div class="p-4 border-b border-white/10 flex items-center justify-between bg-zat-card/90 text-white">
+            <div class="flex items-center space-x-2.5">
+                <i class="fa-solid fa-bag-shopping text-blue-300"></i>
+                <h3 class="font-heading font-bold text-base">Shopping Bag</h3>
+            </div>
+            <button onclick="toggleCartDrawer()" class="text-zat-textMuted hover:text-white transition p-1">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <div class="bg-zat-card/60 px-4 py-2 border-b border-white/10 flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-2 text-zat-textMuted">
+                <i class="fa-solid fa-location-dot text-zat-gold"></i>
+                <span id="cartDrawerHubText" class="font-bold text-white">Jewel Changi Hub</span>
+            </div>
+            <button onclick="toggleHubDropdown(); toggleCartDrawer();" class="text-[10px] text-blue-300 font-bold hover:underline">
+                Change
+            </button>
+        </div>
+
+        <div id="cartItemsContainer" class="flex-grow overflow-y-auto p-4 space-y-3">
+            <!-- Rendered by JS -->
+        </div>
+
+        <div class="p-4 border-t border-white/10 bg-zat-card/90 space-y-3">
+            <div class="space-y-2 bg-zat-bg/80 p-3 rounded-2xl border border-white/10 text-xs">
+                <div class="flex justify-between items-center text-[10px] font-mono text-zat-gold font-bold">
+                    <span><i class="fa-regular fa-clock mr-1"></i> FULFILLMENT SLOT</span>
+                    <span id="cartFulfillmentLabel">30m Express Delivery</span>
+                </div>
+                <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    <input type="date" id="cartPickupDate" class="bg-zat-card border border-white/10 text-xs p-2 rounded-xl text-white focus:border-purple-500 focus:outline-none">
+                    <select id="cartPickupTime" class="bg-zat-card border border-white/10 text-xs p-2 rounded-xl text-white focus:border-purple-500 focus:outline-none truncate">
+                        <option value="ASAP (30m Express / 3m Pickup)">ASAP (30m Express / 3m Pickup)</option>
+                        <option value="08:00 AM - 09:00 AM (Early Morning)">08:00 AM - 09:00 AM (Early Morning)</option>
+                        <option value="11:00 AM - 12:00 PM (Midday)">11:00 AM - 12:00 PM (Midday)</option>
+                        <option value="02:00 PM - 03:00 PM (Afternoon)">02:00 PM - 03:00 PM (Afternoon)</option>
+                        <option value="06:30 PM - 07:30 PM (Dinner Express)">06:30 PM - 07:30 PM (Dinner Express)</option>
+                        <option value="08:00 PM - 09:00 PM (Night Slot)">08:00 PM - 09:00 PM (Night Slot)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="space-y-1.5 text-xs text-zat-textMuted">
+                <div class="flex justify-between">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal" class="font-mono text-white">S$0.00</span>
+                </div>
+                <div class="flex justify-between text-zat-orange">
+                    <span>Discount / Savings</span>
+                    <span id="cartDiscount" class="font-mono">-S$0.00</span>
+                </div>
+                <div class="flex justify-between text-blue-300">
+                    <span>Voucher Applied</span>
+                    <span id="cartVoucherDiscount" class="font-mono">-S$0.00</span>
+                </div>
+                <div class="flex justify-between text-zat-gold">
+                    <span>Coins Earned</span>
+                    <span id="cartCoinsEarned" class="font-mono font-bold">+0 🪙</span>
+                </div>
+                <div class="flex justify-between text-[11px]">
+                    <span>Singapore GST (9% included)</span>
+                    <span id="cartGst" class="font-mono">S$0.00</span>
+                </div>
+                <div class="flex justify-between text-base font-heading font-extrabold text-white border-t border-white/10 pt-2">
+                    <span>Total Amount</span>
+                    <span id="cartTotal" class="text-zat-gold font-mono">S$0.00</span>
+                </div>
+            </div>
+
+            <button id="checkoutBtn" onclick="processPreOrder()" class="w-full fairprice-emerald hover:opacity-90 font-bold py-3.5 rounded-2xl text-xs uppercase tracking-wider flex items-center justify-center space-x-2 text-white shadow-lg shadow-blue-500/20 transition">
+                <span>Proceed to Order</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </aside>
+
+    <div id="pickupPassModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-zat-card/95 rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl border border-white/10 backdrop-blur-2xl">
+            <div class="bg-zat-bg/80 p-5 text-center relative border-b border-white/10">
+                <div class="w-12 h-12 fairprice-emerald text-white rounded-2xl flex items-center justify-center mx-auto text-xl font-heading font-extrabold mb-2 shadow">
+                    Z
+                </div>
+                <h3 class="text-lg font-heading font-bold text-white">Order Confirmed!</h3>
+                <p class="text-xs text-blue-300 font-mono mt-0.5">Routed to Autonomous Robotics Assembly</p>
+                <button onclick="closePickupModal()" class="absolute top-4 right-4 text-zat-textMuted hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-5 space-y-4">
+                <div class="bg-zat-bg/80 border border-white/10 rounded-2xl p-4 text-center space-y-2">
+                    <div class="text-[10px] font-mono text-zat-gold uppercase font-bold tracking-wider">Contactless Robot Locker QR</div>
+                    <div class="w-32 h-32 mx-auto bg-white p-2 rounded-xl shadow flex items-center justify-center">
+                        <img id="qrCodeImg" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ZAT-SG-9981" alt="ZAT Pass QR" class="w-full h-full">
+                    </div>
+                    <div class="text-xs font-mono font-bold text-zat-gold" id="passOrderId">PASS #ZAT-8829-SG</div>
+                </div>
+
+                <div class="space-y-1.5 text-xs text-zat-textMuted">
+                    <div class="flex justify-between py-1 border-b border-white/10">
+                        <span>Station Outlet:</span>
+                        <span class="font-bold text-white" id="passStation">Jewel Changi Hub</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-white/10">
+                        <span>Est. Order Prep Timer:</span>
+                        <span class="font-bold text-zat-gold font-mono" id="passPrepTimer">01m 45s (~2 mins)</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-white/10">
+                        <span>Window Time:</span>
+                        <span class="font-bold text-zat-gold" id="passTime">ASAP (30m Express)</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-white/10">
+                        <span>Coins Earned:</span>
+                        <span class="font-bold text-zat-gold font-mono" id="passCoinsEarned">+0 🪙</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-white/10">
+                        <span>Total Paid:</span>
+                        <span class="font-bold text-white font-mono" id="passTotal">S$0.00</span>
+                    </div>
+                </div>
+
+                <button onclick="closePickupModal()" class="w-full fairprice-emerald font-bold py-3 rounded-xl text-xs uppercase tracking-wider text-white shadow">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gemini Robot Inspection Modal -->
+    <div id="robotModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-zat-card/95 rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-white/10 flex flex-col max-h-[92vh] backdrop-blur-2xl">
+            <div class="bg-zat-bg/80 p-4 sm:p-5 flex items-center justify-between border-b border-white/10">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500 via-purple-600 to-pink-500 flex items-center justify-center text-white text-lg shadow-lg shadow-purple-500/30">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-heading font-bold text-white flex items-center gap-2">
+                            <span>Gemini Bipedal Pick Arm MK-IV</span>
+                            <span class="bg-gradient-to-r from-blue-500/30 to-purple-500/30 text-purple-200 border border-purple-400/40 text-[9px] font-mono px-2 py-0.5 rounded-full">GEMINI LIVE FEED</span>
+                        </h3>
+                        <p class="text-xs text-zat-textMuted font-mono">Darkstore Unit #04 • Gemini Vision Pick Cell</p>
+                    </div>
+                </div>
+                <button onclick="toggleRobotModal()" class="text-zat-textMuted hover:text-white transition p-2 rounded-xl hover:bg-zat-cardBorder">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-4 sm:p-6 overflow-y-auto space-y-5">
+                <div class="relative w-full h-72 sm:h-80 rounded-2xl overflow-hidden bg-black/70 border border-purple-500/20 shadow-inner">
+                    <canvas id="robotModalCanvas" class="w-full h-full block bg-transparent"></canvas>
+                    
+                    <div class="absolute top-3 left-3 bg-black/80 backdrop-blur border border-purple-500/30 rounded-xl p-2.5 text-[10px] font-mono space-y-1 text-white shadow-lg">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+                            <span class="font-bold text-purple-300">GEMINI VISION SCAN</span>
+                        </div>
+                        <div class="text-zat-textMuted">FPS: <span id="robotFps" class="text-white">60</span> | LATENCY: <span class="text-zat-gold">0.8ms</span></div>
+                        <div class="text-zat-textMuted">SERVO EFFICIENCY: <span class="text-purple-300">99.8%</span></div>
+                    </div>
+
+                    <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center bg-black/80 backdrop-blur border border-purple-500/30 rounded-xl px-3 py-1.5 text-[10px] font-mono shadow-lg">
+                        <span class="text-zat-gold truncate" id="robotActionStatus">Gemini Pick & Place Demo [Supply Chute -> Conveyor]</span>
+                        <span class="text-purple-300 font-bold whitespace-nowrap">STATUS: <span id="modalStepText">READY</span></span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="bg-zat-bg/80 p-3 rounded-2xl border border-white/10 text-center">
+                        <div class="text-[9px] font-mono text-zat-textMuted uppercase">Gripper Pressure</div>
+                        <div class="text-sm font-bold font-mono text-blue-300 mt-0.5">1.42 N/cm²</div>
+                        <div class="text-[9px] text-zat-textMuted">Soft-Touch Produce Mode</div>
+                    </div>
+                    <div class="bg-zat-bg/80 p-3 rounded-2xl border border-white/10 text-center">
+                        <div class="text-[9px] font-mono text-zat-textMuted uppercase">Pacing Speed</div>
+                        <div class="text-sm font-bold font-mono text-zat-gold mt-0.5">Calibrated Servo</div>
+                        <div class="text-[9px] text-zat-textMuted">Smooth Assembly Mode</div>
+                    </div>
+                    <div class="bg-zat-bg/80 p-3 rounded-2xl border border-white/10 text-center">
+                        <div class="text-[9px] font-mono text-zat-textMuted uppercase">Optic Alignment</div>
+                        <div class="text-sm font-bold font-mono text-cyan-400 mt-0.5">100.0% Calibrated</div>
+                        <div class="text-[9px] text-zat-textMuted">Gemini Auto Optics</div>
+                    </div>
+                    <div class="bg-zat-bg/80 p-3 rounded-2xl border border-white/10 text-center">
+                        <div class="text-[9px] font-mono text-zat-textMuted uppercase">Power Mode</div>
+                        <div class="text-sm font-bold font-mono text-purple-400 mt-0.5">Eco Mode</div>
+                        <div class="text-[9px] text-zat-textMuted">Ultra-Quiet Servos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI DISH SCANNER MODAL -->
+    <div id="aiModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-zat-card/95 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border border-white/10 flex flex-col max-h-[92vh] backdrop-blur-2xl">
+            <div class="bg-zat-bg/80 p-5 flex items-center justify-between border-b border-white/10">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-2xl ai-purple-gradient flex items-center justify-center text-white text-lg shadow">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-heading font-bold text-white flex items-center gap-2">
+                            <span>AI Dish Recipe & Grocery Scanner</span>
+                            <span class="bg-purple-500/20 text-purple-300 border border-purple-500/30 text-[9px] font-mono px-2 py-0.5 rounded-full">v2.4 Vision + Reviews</span>
+                        </h3>
+                        <p class="text-xs text-zat-textMuted">Select a dish preset, upload a photo, or type a dish to auto-match ingredients & view customer reviews</p>
+                    </div>
+                </div>
+                <button onclick="closeAiModal()" class="text-zat-textMuted hover:text-white transition p-2 rounded-xl hover:bg-zat-cardBorder">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-5 sm:p-6 space-y-5 overflow-y-auto">
+                <div class="flex items-center bg-zat-bg/80 p-1 rounded-2xl border border-white/10 text-xs">
+                    <button onclick="switchAiTab('presets')" id="aiTabPresetsBtn" class="flex-1 py-2 rounded-xl font-bold transition fairprice-emerald text-white shadow text-center">
+                        <i class="fa-solid fa-utensils mr-1.5"></i>4 Featured Dishes
+                    </button>
+                    <button onclick="switchAiTab('photo')" id="aiTabPhotoBtn" class="flex-1 py-2 rounded-xl font-medium text-zat-textMuted hover:text-white transition text-center">
+                        <i class="fa-solid fa-camera mr-1.5"></i>Photo Scan
+                    </button>
+                    <button onclick="switchAiTab('prompt')" id="aiTabPromptBtn" class="flex-1 py-2 rounded-xl font-medium text-zat-textMuted hover:text-white transition text-center">
+                        <i class="fa-solid fa-keyboard mr-1.5"></i>Custom Prompt
+                    </button>
+                </div>
+
+                <!-- Tab 1: 4 Featured Visual Dish Presets -->
+                <div id="aiTabPresets" class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-white uppercase tracking-wider font-mono">Popular AI Dish Recipes</span>
+                        <span class="text-[10px] text-purple-300 font-mono">Tap any card to instant-scan</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div onclick="selectAiPreset('wagyu_pasta')" class="bg-zat-bg/80 border border-white/10 hover:border-purple-500/60 rounded-2xl p-2.5 cursor-pointer transition group flex flex-col justify-between space-y-2">
+                            <div class="relative h-24 rounded-xl overflow-hidden bg-black/40">
+                                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=80" alt="Creamy Truffle Wagyu Pasta" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                <span class="absolute top-1 left-1 bg-purple-900/90 text-purple-200 text-[8px] font-mono px-1.5 py-0.5 rounded font-bold">3 Ingredients</span>
+                                <span class="absolute bottom-1 right-1 bg-black/80 text-zat-gold text-[8px] font-mono px-1.5 py-0.5 rounded">⚡ 15 Mins</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white group-hover:text-purple-300 transition line-clamp-1">Creamy Truffle Wagyu Pasta</h4>
+                                <p class="text-[10px] text-zat-textMuted line-clamp-1">Miyazaki Wagyu + Truffle Cream + Sourdough</p>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px] pt-1 border-t border-white/10">
+                                <span class="font-mono text-white font-bold">Est. S$35.10</span>
+                                <span class="text-purple-400 font-bold group-hover:underline">Scan Dish →</span>
+                            </div>
+                        </div>
+
+                        <div onclick="selectAiPreset('strawberry_parfait')" class="bg-zat-bg/80 border border-white/10 hover:border-purple-500/60 rounded-2xl p-2.5 cursor-pointer transition group flex flex-col justify-between space-y-2">
+                            <div class="relative h-24 rounded-xl overflow-hidden bg-black/40">
+                                <img src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=500&q=80" alt="Japanese Strawberry Parfait" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                <span class="absolute top-1 left-1 bg-purple-900/90 text-purple-200 text-[8px] font-mono px-1.5 py-0.5 rounded font-bold">3 Ingredients</span>
+                                <span class="absolute bottom-1 right-1 bg-black/80 text-zat-gold text-[8px] font-mono px-1.5 py-0.5 rounded">⚡ 5 Mins</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white group-hover:text-purple-300 transition line-clamp-1">Japanese Strawberry Parfait</h4>
+                                <p class="text-[10px] text-zat-textMuted line-clamp-1">Fukuoka Strawberries + Hokkaido Milk + Yogurt</p>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px] pt-1 border-t border-white/10">
+                                <span class="font-mono text-white font-bold">Est. S$17.75</span>
+                                <span class="text-purple-400 font-bold group-hover:underline">Scan Dish →</span>
+                            </div>
+                        </div>
+
+                        <div onclick="selectAiPreset('pan_seared_salmon')" class="bg-zat-bg/80 border border-white/10 hover:border-purple-500/60 rounded-2xl p-2.5 cursor-pointer transition group flex flex-col justify-between space-y-2">
+                            <div class="relative h-24 rounded-xl overflow-hidden bg-black/40">
+                                <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=500&q=80" alt="Norwegian Salmon & Salad" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                <span class="absolute top-1 left-1 bg-purple-900/90 text-purple-200 text-[8px] font-mono px-1.5 py-0.5 rounded font-bold">3 Ingredients</span>
+                                <span class="absolute bottom-1 right-1 bg-black/80 text-zat-gold text-[8px] font-mono px-1.5 py-0.5 rounded">⚡ 12 Mins</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white group-hover:text-purple-300 transition line-clamp-1">Pan-Seared Salmon & Greens</h4>
+                                <p class="text-[10px] text-zat-textMuted line-clamp-1">Atlantic Salmon + Hydroponic Lettuce + Herbs</p>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px] pt-1 border-t border-white/10">
+                                <span class="font-mono text-white font-bold">Est. S$14.20</span>
+                                <span class="text-purple-400 font-bold group-hover:underline">Scan Dish →</span>
+                            </div>
+                        </div>
+
+                        <div onclick="selectAiPreset('breakfast_toast')" class="bg-zat-bg/80 border border-white/10 hover:border-purple-500/60 rounded-2xl p-2.5 cursor-pointer transition group flex flex-col justify-between space-y-2">
+                            <div class="relative h-24 rounded-xl overflow-hidden bg-black/40">
+                                <img src="https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=500&q=80" alt="SG Heritage Egg & Avocado Toast" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                <span class="absolute top-1 left-1 bg-purple-900/90 text-purple-200 text-[8px] font-mono px-1.5 py-0.5 rounded font-bold">3 Ingredients</span>
+                                <span class="absolute bottom-1 right-1 bg-black/80 text-zat-gold text-[8px] font-mono px-1.5 py-0.5 rounded">⚡ 10 Mins</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white group-hover:text-purple-300 transition line-clamp-1">SG Egg & Avocado Toast</h4>
+                                <p class="text-[10px] text-zat-textMuted line-clamp-1">Seng Choon Eggs + Hass Avocados + Sourdough</p>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px] pt-1 border-t border-white/10">
+                                <span class="font-mono text-white font-bold">Est. S$11.45</span>
+                                <span class="text-purple-400 font-bold group-hover:underline">Scan Dish →</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Camera Photo Scan -->
+                <div id="aiTabPhoto" class="hidden space-y-3">
+                    <div onclick="simulatePhotoUpload()" class="border-2 border-dashed border-purple-500/40 hover:border-purple-500 rounded-2xl p-6 text-center cursor-pointer transition bg-zat-bg/50 space-y-2 group">
+                        <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto text-purple-300 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-camera text-xl"></i>
+                        </div>
+                        <p class="text-xs text-white font-bold">Drop Food Photo or Click to Snap</p>
+                        <p class="text-[10px] text-zat-textMuted max-w-xs mx-auto">AI visual recognition automatically identifies ingredients and checks ZAT live darkstore stock</p>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Custom Text Prompt -->
+                <div id="aiTabPrompt" class="hidden space-y-3">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-white uppercase tracking-wider font-mono">Custom Dish Prompt / Recipe Name</label>
+                        <div class="flex space-x-2">
+                            <input type="text" id="aiDishInput" placeholder="e.g. Creamy Truffle Wagyu Pasta, Strawberry Parfait..." class="flex-grow bg-zat-bg border border-white/10 text-xs text-white p-3 rounded-xl focus:border-purple-500 focus:outline-none">
+                            <button onclick="generateAiIngredients()" class="ai-purple-gradient hover:opacity-90 text-white font-bold px-4 rounded-xl text-xs flex items-center space-x-1.5 transition">
+                                <i class="fa-solid fa-bolt"></i>
+                                <span>Scan Dish</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Results Section -->
+                <div id="aiResultsContainer" class="hidden space-y-3 pt-3 border-t border-white/10">
+                    <div class="flex justify-between items-center text-xs">
+                        <span id="aiMatchedTitle" class="font-bold text-zat-gold font-mono uppercase">Matched ZAT Ingredients</span>
+                        <span class="text-[10px] text-blue-300 flex items-center gap-1 font-mono">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>100% Darkstore Stock Verified</span>
+                        </span>
+                    </div>
+
+                    <div id="aiMatchedItemsList" class="space-y-3">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <button onclick="addAllAiItemsToCart()" class="w-full fairprice-emerald hover:opacity-90 text-white font-bold py-3.5 rounded-2xl text-xs uppercase tracking-wider flex items-center justify-center space-x-2 shadow-lg shadow-blue-500/20 transition mt-2">
+                        <i class="fa-solid fa-cart-plus text-sm"></i>
+                        <span>Add All Matched Ingredients to Shopping Bag</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="coinModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-zat-card/95 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl border border-white/10 flex flex-col max-h-[90vh] backdrop-blur-2xl">
+            <div class="bg-zat-bg/80 p-5 flex items-center justify-between border-b border-white/10">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-2xl coin-gradient flex items-center justify-center text-white text-lg shadow">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-heading font-bold text-white">ZAT CoinMart Rewards Store</h3>
+                        <p class="text-xs text-zat-gold font-mono">Redeem Coins for Free Fresh Produce & Perks</p>
+                    </div>
+                </div>
+                <button onclick="closeCoinModal()" class="text-zat-textMuted hover:text-white transition p-2">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-5 overflow-y-auto">
+                <div class="bg-gradient-to-r from-amber-950/60 via-zat-bg to-purple-950/40 p-4 rounded-2xl border border-zat-gold/30 flex justify-between items-center">
+                    <div>
+                        <div class="text-[10px] font-mono text-zat-textMuted uppercase">Your Balance</div>
+                        <div class="text-2xl font-bold font-mono text-zat-gold flex items-center space-x-2">
+                            <span id="modalCoinBalance">1,250</span>
+                            <span class="text-sm">🪙</span>
+                        </div>
+                    </div>
+                    <button onclick="claimDailyCheckIn()" id="modalCheckInBtn" class="coin-gradient hover:opacity-90 text-white font-bold px-4 py-2 rounded-xl text-xs shadow transition">
+                        Daily Check-In (+50 🪙)
+                    </button>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono">Exclusive Coin Redemptions</h4>
+                    
+                    <div class="space-y-2">
+                        <div class="bg-zat-bg/80 border border-white/10 p-3 rounded-2xl flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-zat-gold text-lg">
+                                    🎟️
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-white">S$10 Express Grocery Voucher</div>
+                                    <div class="text-[10px] text-zat-textMuted">Valid for all express darkstore deliveries</div>
+                                </div>
+                            </div>
+                            <button onclick="redeemCoinReward(1000, 'RESCUEHERO10')" class="bg-zat-card hover:bg-zat-cardBorder border border-zat-gold/40 text-zat-gold font-bold px-3 py-1.5 rounded-xl text-xs transition">
+                                1,000 🪙
+                            </button>
+                        </div>
+
+                        <div class="bg-zat-bg/80 border border-white/10 p-3 rounded-2xl flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-300 text-lg">
+                                    🥚
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-white">Free Seng Choon Fresh Eggs (10s)</div>
+                                    <div class="text-[10px] text-zat-textMuted">Local SG Farm fresh pasteurized eggs</div>
+                                </div>
+                            </div>
+                            <button onclick="redeemFreeItem('p1', 500)" class="bg-zat-card hover:bg-zat-cardBorder border border-zat-gold/40 text-zat-gold font-bold px-3 py-1.5 rounded-xl text-xs transition">
+                                500 🪙
+                            </button>
+                        </div>
+
+                        <div class="bg-zat-bg/80 border border-white/10 p-3 rounded-2xl flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 text-lg">
+                                    🍓
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-white">Free Fukuoka Strawberries (250g)</div>
+                                    <div class="text-[10px] text-zat-textMuted">Air-flown Japanese gourmet rescue strawberries</div>
+                                </div>
+                            </div>
+                            <button onclick="redeemFreeItem('p2', 800)" class="bg-zat-card hover:bg-zat-cardBorder border border-zat-gold/40 text-zat-gold font-bold px-3 py-1.5 rounded-xl text-xs transition">
+                                800 🪙
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-zat-card/90 backdrop-blur-2xl border-t border-white/10 z-40 px-3 py-2 flex items-center justify-around text-[10px]">
+        <a href="#home" class="flex flex-col items-center text-blue-300 font-bold space-y-1">
+            <i class="fa-solid fa-house text-base"></i>
+            <span>Home</span>
+        </a>
+        <a href="#store" onclick="setCategory('clearance')" class="flex flex-col items-center text-zat-textMuted hover:text-zat-gold transition space-y-1">
+            <i class="fa-solid fa-bolt text-base"></i>
+            <span>Rescue</span>
+        </a>
+        <a href="javascript:void(0)" onclick="openCoinModal()" class="flex flex-col items-center text-zat-textMuted hover:text-zat-gold transition space-y-1">
+            <i class="fa-solid fa-coins text-base text-zat-gold"></i>
+            <span>Coins</span>
+        </a>
+        <a href="javascript:void(0)" onclick="toggleCartDrawer()" class="flex flex-col items-center text-zat-textMuted hover:text-white transition space-y-1 relative">
+            <i class="fa-solid fa-cart-shopping text-base"></i>
+            <span>Cart</span>
+            <span id="mobileCartBadge" class="absolute -top-1 -right-2 bg-zat-orange text-white font-mono font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+        </a>
+    </nav>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-16 md:bottom-6 right-6 bg-zat-card/95 border border-purple-500/40 text-white px-4 py-3 rounded-2xl shadow-2xl z-50 flex items-center space-x-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none text-xs backdrop-blur-xl">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-purple-300 text-base"></i>
+        <span id="toastMsg" class="font-bold">Item added to cart!</span>
+    </div>
+
+    <footer class="bg-zat-card/80 text-zat-textMuted text-xs border-t border-white/10 py-10 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-2 font-heading font-extrabold text-white text-lg">
+                        <span>ZAT SUPERMARKET</span>
+                    </div>
+                    <p class="text-[11px] leading-relaxed">
+                        Singapore's haute autonomous darkstore network. Instant express delivery & bipedal robotics pickup pods powered by Gemini vision logic.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-2 uppercase text-[11px]">Popular Aisles</h4>
+                    <ul class="space-y-1 text-[11px]">
+                        <li><a href="#store" onclick="setCategory('clearance')" class="hover:text-zat-gold">Flash Food Clearance (70% Off)</a></li>
+                        <li><a href="#store" onclick="setCategory('produce')" class="hover:text-blue-300">Organic Farm Produce</a></li>
+                        <li><a href="#store" onclick="setCategory('dairy')" class="hover:text-purple-400">Air-Flown Hokkaido Milk</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-2 uppercase text-[11px]">Fulfillment Hubs</h4>
+                    <ul class="space-y-1 text-[11px]">
+                        <li>Jewel Changi Sub-Level Darkstore</li>
+                        <li>Orchard Gateway Pod Station</li>
+                        <li>Our Tampines Hub Express</li>
+                        <li>Jurong Point Climate Hub</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-2 uppercase text-[11px]">System Status</h4>
+                    <div class="bg-zat-bg/80 p-3 rounded-xl border border-white/10 space-y-1">
+                        <div class="flex justify-between items-center text-[10px]">
+                            <span>Gemini Robot Fleet:</span>
+                            <span class="text-purple-300 font-bold">100% Operational</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px]">
+                            <span>Avg. Darkstore Pick:</span>
+                            <span class="text-zat-gold font-bold">1m 45s</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-4 text-center text-[11px]">
+                © 2026 ZAT Supermarket SG. All rights reserved. Autonomous Bipedal Logistics & Gemini AI Vision.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const PRODUCTS = [
+            {
+                id: 'p1',
+                name: 'Seng Choon Farm Fresh Eggs (10s)',
+                cat: 'sg-local',
+                price: 3.45,
+                origPrice: 4.20,
+                discount: '18% OFF',
+                tag: 'SG Fresh Local',
+                isRescue: false,
+                rating: 4.9,
+                sold: '2.4k',
+                img: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=600&q=80',
+                color: '#fbbc04',
+                desc: 'Locally farmed SG Seng Choon eggs. High in Omega-3 and pasteurized for complete peace of mind.',
+                nutrition: '70 kcal, 6g Protein, 5g Fat per egg',
+                origin: 'Sungei Tengah, Singapore',
+                reviews: [
+                    { user: 'Siti A.', rating: 5, text: 'Super fresh egg yolks! Soft boiled eggs came out perfect every time.' },
+                    { user: 'David K.', rating: 5, text: 'Clean shells and vibrant dark yolks. Delivered cold via ZAT robot locker.' }
+                ]
+            },
+            {
+                id: 'p2',
+                name: 'Japanese Air-Flown Fukuoka Strawberries (250g)',
+                cat: 'clearance',
+                price: 8.90,
+                origPrice: 22.00,
+                discount: '60% OFF',
+                tag: 'Food Rescue Special',
+                isRescue: true,
+                rating: 5.0,
+                sold: '1.8k',
+                img: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=600&q=80',
+                color: '#ea4335',
+                desc: 'Rescued directly from premium imports. Peak sweetness and fragrance, ideal for immediate enjoyment.',
+                nutrition: '32 kcal, 0.7g Protein, 7.7g Carbs per 100g',
+                origin: 'Fukuoka Prefecture, Japan',
+                reviews: [
+                    { user: 'Rachel L.', rating: 5, text: 'Amazingly sweet and fragrant! Unbelievable deal at 60% off!' },
+                    { user: 'Kenji T.', rating: 5, text: 'Zero blemishes. High grade Japanese Amaou strawberries at darkstore price.' }
+                ]
+            },
+            {
+                id: 'p3',
+                name: 'Hokkaido Pure Organic Fresh Milk (1L)',
+                cat: 'dairy',
+                price: 4.95,
+                origPrice: 6.80,
+                discount: '27% OFF',
+                tag: 'Air-Flown Japan',
+                isRescue: false,
+                rating: 4.8,
+                sold: '3.1k',
+                img: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=600&q=80',
+                color: '#4285f4',
+                desc: 'Rich, creamy 100% whole milk from free-roaming Hokkaido cows. Cold chain sealed.',
+                nutrition: '67 kcal, 3.4g Protein, 3.8g Fat per 100ml',
+                origin: 'Sapporo, Hokkaido, Japan',
+                reviews: [
+                    { user: 'Grace W.', rating: 5, text: 'Rich, velvety taste that pairs wonderfully with espresso and morning oats.' },
+                    { user: 'Mark S.', rating: 4, text: 'Authentic Hokkaido milk. Sealed cold chain directly from Changi airport hub.' }
+                ]
+            },
+            {
+                id: 'p4',
+                name: 'Gourmet Artisanal Sourdough Loaf (400g)',
+                cat: 'bakery',
+                price: 3.80,
+                origPrice: 8.50,
+                discount: '55% OFF',
+                tag: 'Fresh Baked Today',
+                isRescue: true,
+                rating: 4.7,
+                sold: '950',
+                img: 'https://images.unsplash.com/photo-1585478259715-876a6a81ae08?auto=format&fit=crop&w=600&q=80',
+                color: '#fbbc04',
+                desc: 'Naturally fermented for 36 hours with wild yeast. Crisp crust with soft, airy interior.',
+                nutrition: '210 kcal, 8g Protein, 1g Fat per slice',
+                origin: 'ZAT Artisanal Dark Bakery, SG',
+                reviews: [
+                    { user: 'Bernard L.', rating: 5, text: 'Crust was delightfully crisp when toasted. Great natural sourdough tang.' }
+                ]
+            },
+            {
+                id: 'p5',
+                name: 'Norwegian Fresh Atlantic Salmon Fillet (300g)',
+                cat: 'clearance',
+                price: 9.20,
+                origPrice: 18.90,
+                discount: '51% OFF',
+                tag: 'Rescue Seafood',
+                isRescue: true,
+                rating: 4.9,
+                sold: '1.2k',
+                img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=600&q=80',
+                color: '#ea4335',
+                desc: 'Sustainably farmed Norwegian salmon. Rich in Omega-3 fatty acids, vacuum packed.',
+                nutrition: '208 kcal, 20g Protein, 13g Fat per 100g',
+                origin: 'Fjords of Bergen, Norway',
+                reviews: [
+                    { user: 'Cheryl P.', rating: 5, text: 'Crispy skin when seared! Fresh ocean smell with rich Omega-3 fats.' }
+                ]
+            },
+            {
+                id: 'p6',
+                name: 'Organic Hydroponic SG Butterhead Lettuce',
+                cat: 'produce',
+                price: 2.20,
+                origPrice: 3.50,
+                discount: '37% OFF',
+                tag: 'SG Local Produce',
+                isRescue: false,
+                rating: 4.8,
+                sold: '4.5k',
+                img: 'https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?auto=format&fit=crop&w=600&q=80',
+                color: '#34a853',
+                desc: 'Pesticide-free hydroponic lettuce grown in high-tech Singapore indoor sky farms.',
+                nutrition: '13 kcal, 1.5g Protein, 2.2g Carbs per 100g',
+                origin: 'Lim Chu Kang Vertical Farm, SG',
+                reviews: [
+                    { user: 'Ahmad N.', rating: 5, text: 'Super tender and crunchy! Cleaned and ready for salad.' }
+                ]
+            },
+            {
+                id: 'p7',
+                name: 'Japanese Miyazaki A5 Wagyu Beef Slice (200g)',
+                cat: 'clearance',
+                price: 24.50,
+                origPrice: 58.00,
+                discount: '58% OFF',
+                tag: 'A5 Wagyu Rescue',
+                isRescue: true,
+                rating: 5.0,
+                sold: '800',
+                img: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80',
+                color: '#a8c7fa',
+                desc: 'Mouth-watering melt-in-your-mouth marbling. Ideal for shabu-shabu or rapid searing.',
+                nutrition: '420 kcal, 16g Protein, 38g Fat per 100g',
+                origin: 'Miyazaki Prefecture, Japan',
+                reviews: [
+                    { user: 'Vikram M.', rating: 5, text: 'Incredible marbling grade BMS 10+. Literally melted on the tongue.' },
+                    { user: 'Evelyn H.', rating: 5, text: 'Unbeatable price for authentic A5 Miyazaki beef!' }
+                ]
+            },
+            {
+                id: 'p8',
+                name: 'New Zealand Hass Avocados (3 Pack)',
+                cat: 'produce',
+                price: 4.20,
+                origPrice: 6.90,
+                discount: '39% OFF',
+                tag: 'Ready to Eat',
+                isRescue: false,
+                rating: 4.6,
+                sold: '1.9k',
+                img: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=600&q=80',
+                color: '#34a853',
+                desc: 'Creamy, rich Hass avocados perfectly ripened in controlled darkstore atmosphere.',
+                nutrition: '160 kcal, 2g Protein, 15g Fat per avocado',
+                origin: 'Bay of Plenty, New Zealand',
+                reviews: [
+                    { user: 'Jonathan T.', rating: 5, text: 'Ripe and ready to eat immediately! Creamy avocado toast bliss.' }
+                ]
+            },
+            {
+                id: 'p9',
+                name: 'Pahang Musang King Durian Pack (400g)',
+                cat: 'clearance',
+                price: 18.90,
+                origPrice: 38.00,
+                discount: '50% OFF',
+                tag: 'Fresh Chilled SG',
+                isRescue: true,
+                rating: 4.9,
+                sold: '3.2k',
+                img: 'https://images.unsplash.com/photo-1587049352847-4a222e784d38?auto=format&fit=crop&w=600&q=80',
+                color: '#fbbc04',
+                desc: 'Rescued directly from Pahang orchards. Bittersweet creamy texture, vacuum sealed.',
+                nutrition: '147 kcal, 1.5g Protein, 5.3g Fat per 100g',
+                origin: 'Raub, Pahang, Malaysia',
+                reviews: [
+                    { user: 'Wong K.F.', rating: 5, text: 'Thick creamy pulp with small seeds. Fragrant and bittersweet!' }
+                ]
+            },
+            {
+                id: 'p10',
+                name: 'Fresh Live SG Tiger Prawns (500g)',
+                cat: 'produce',
+                price: 11.50,
+                origPrice: 15.80,
+                discount: '27% OFF',
+                tag: 'SG Fresh Seafood',
+                isRescue: false,
+                rating: 4.8,
+                sold: '1.4k',
+                img: 'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=600&q=80',
+                color: '#ea4335',
+                desc: 'Sustainably farmed local Singapore tiger prawns. Firm texture and naturally sweet flavor.',
+                nutrition: '99 kcal, 24g Protein, 0.3g Fat per 100g',
+                origin: 'Jurong Offshore Aquafarm, SG',
+                reviews: [
+                    { user: 'Mei Ling C.', rating: 5, text: 'Bouncy and sweet! Fantastic for steam garlic prawns.' }
+                ]
+            },
+            {
+                id: 'p11',
+                name: 'CP Golden Crisp Crispy Wings (1kg)',
+                cat: 'sg-local',
+                price: 8.50,
+                origPrice: 11.20,
+                discount: '24% OFF',
+                tag: 'SG Freezer Favorite',
+                isRescue: false,
+                rating: 4.9,
+                sold: '5.6k',
+                img: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=600&q=80',
+                color: '#fbbc04',
+                desc: 'Singapore staple favorite. Juicy marinated chicken wings with a crisp coating.',
+                nutrition: '240 kcal, 18g Protein, 14g Fat per 100g',
+                origin: 'Singapore Quality Food Processing',
+                reviews: [
+                    { user: 'Daniel C.', rating: 5, text: 'Air fried at 200°C for 12 mins. Ultra crisp skin and juicy chicken inside.' }
+                ]
+            },
+            {
+                id: 'p12',
+                name: 'Australian Black Angus Ribeye (250g)',
+                cat: 'clearance',
+                price: 14.80,
+                origPrice: 32.00,
+                discount: '53% OFF',
+                tag: 'Gourmet Meat Rescue',
+                isRescue: true,
+                rating: 4.9,
+                sold: '1.1k',
+                img: 'https://images.unsplash.com/photo-1603048588665-791ca8aea617?auto=format&fit=crop&w=600&q=80',
+                color: '#ea4335',
+                desc: 'Grain-fed 150 days Black Angus ribeye with rich marbling. Perfectly aged and ready for pan-searing.',
+                nutrition: '250 kcal, 26g Protein, 16g Fat per 100g',
+                origin: 'Darling Downs, Queensland, Australia',
+                reviews: [
+                    { user: 'Sam R.', rating: 5, text: 'Generous thickness and beautiful grain-fed flavor.' }
+                ]
+            },
+            {
+                id: 'p13',
+                name: 'Organic Greek Style Yogurt Trio Pack (3x120g)',
+                cat: 'dairy',
+                price: 3.90,
+                origPrice: 6.50,
+                discount: '40% OFF',
+                tag: 'Chilled Dairy',
+                isRescue: false,
+                rating: 4.7,
+                sold: '2.1k',
+                img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80',
+                color: '#4285f4',
+                desc: 'High protein probiotic Greek yogurt sweetened with wild honey and mountain berries.',
+                nutrition: '95 kcal, 10g Protein, 2.5g Fat per cup',
+                origin: 'Chilled Dairy Cold Chain Hub, SG',
+                reviews: [
+                    { user: 'Nadia B.', rating: 5, text: 'Thick and creamy with real berry compote. Low sugar treat!' }
+                ]
+            },
+            {
+                id: 'p14',
+                name: 'French Butter Croissants (4 Pack)',
+                cat: 'bakery',
+                price: 4.20,
+                origPrice: 8.90,
+                discount: '52% OFF',
+                tag: 'Bakery Food Rescue',
+                isRescue: true,
+                rating: 4.8,
+                sold: '1.7k',
+                img: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80',
+                color: '#fbbc04',
+                desc: 'Flaky 84% Isigny butter French croissants baked fresh this morning.',
+                nutrition: '270 kcal, 5g Protein, 16g Fat per croissant',
+                origin: 'Normandy Butter Imports, France',
+                reviews: [
+                    { user: 'Pierre L.', rating: 5, text: 'Authentic French butter aroma! Reheated in toaster oven for 2 minutes.' }
+                ]
+            },
+            {
+                id: 'p15',
+                name: 'SG Sky Farm Fresh Basil & Rosemary (100g)',
+                cat: 'produce',
+                price: 2.80,
+                origPrice: 3.80,
+                discount: '26% OFF',
+                tag: 'SG Sky Farm',
+                isRescue: false,
+                rating: 4.6,
+                sold: '820',
+                img: 'https://images.unsplash.com/photo-1608683059902-861c83c276ec?auto=format&fit=crop&w=600&q=80',
+                color: '#34a853',
+                desc: 'Aromatic pesticide-free culinary herbs harvested daily from Singapore indoor vertical farms.',
+                nutrition: '22 kcal, 3g Protein, 0.6g Fat per 100g',
+                origin: 'Sembawang Sky Green Towers, SG',
+                reviews: [
+                    { user: 'Farhan Y.', rating: 5, text: 'Fresh, fragrant basil. Elevates homemade pasta sauce completely.' }
+                ]
+            },
+            {
+                id: 'p16',
+                name: 'Italian Black Truffle Cream Sauce (350g)',
+                cat: 'clearance',
+                price: 6.80,
+                origPrice: 16.50,
+                discount: '58% OFF',
+                tag: 'Gourmet Rescue Pantry',
+                isRescue: true,
+                rating: 5.0,
+                sold: '940',
+                img: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80',
+                color: '#a8c7fa',
+                desc: 'Authentic Umbrian black truffle cream sauce with wild porcini mushrooms.',
+                nutrition: '180 kcal, 2.8g Protein, 17g Fat per 100g',
+                origin: 'Umbria Region, Italy',
+                reviews: [
+                    { user: 'Isabella M.', rating: 5, text: 'Extremely aromatic black truffle aroma! Restaurant quality pasta sauce.' }
+                ]
+            }
+        ];
+
+        let state = {
+            cart: [],
+            appliedVoucher: null,
+            selectedCategory: 'all',
+            searchQuery: '',
+            selectedHub: 'Jewel Changi Hub',
+            fulfillmentMode: 'delivery',
+            userCoins: 1250,
+            hasCheckedInToday: false,
+            aiMatchedProducts: [],
+            prepSecondsRemaining: 105
+        };
+
+        const AI_PRESETS = {
+            wagyu_pasta: {
+                title: "Creamy Truffle Wagyu Pasta",
+                items: ['p7', 'p16', 'p4']
+            },
+            strawberry_parfait: {
+                title: "Japanese Strawberry Parfait",
+                items: ['p2', 'p3', 'p13']
+            },
+            pan_seared_salmon: {
+                title: "Pan-Seared Salmon & Greens",
+                items: ['p5', 'p6', 'p15']
+            },
+            breakfast_toast: {
+                title: "SG Egg & Avocado Toast",
+                items: ['p1', 'p8', 'p4']
+            }
+        };
+
+        const ITEM_COLORS = [
+            { name: 'Seng Choon Farm Fresh Eggs', color: '#fbbc04', icon: '🥚', glow: '#fef08a' },
+            { name: 'Fukuoka Strawberries', color: '#ef4444', icon: '🍓', glow: '#fca5a5' },
+            { name: 'Hokkaido Pure Organic Milk', color: '#3b82f6', icon: '🥛', glow: '#93c5fd' },
+            { name: 'Artisanal Sourdough Loaf', color: '#f59e0b', icon: '🍞', glow: '#fde68a' },
+            { name: 'Norwegian Atlantic Salmon', color: '#f97316', icon: '🐟', glow: '#fdba74' },
+            { name: 'Miyazaki A5 Wagyu Slices', color: '#ec4899', icon: '🥩', glow: '#fbcfe8' }
+        ];
+
+        let itemIndex = 0;
+
+        /**
+         * Gemini Articulated Bipedal Robotic Pick Arm Simulator
+         * Features a smooth parabolic return glide between the end of dispatch
+         * and the start of intake, eliminating abrupt stops or positioning jumps.
+         */
+        class RobotArmSimulator {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                
+                // Sequence: SLIDE_IN -> DESCEND_PICK -> LIFT_ITEM -> MOVE_BELT -> LOWER_RELEASE -> SLIDE_OUT -> loop seamlessly
+                this.phase = 'SLIDE_IN'; 
+                this.progress = 0;
+                
+                this.item = {
+                    x: 0,
+                    y: 0,
+                    type: ITEM_COLORS[0],
+                    held: false,
+                    onBelt: false,
+                    rot: 0
+                };
+
+                this.current = { x: 0, y: 0 };
+                this.particles = [];
+                this.conveyorOffset = 0;
+                this.gripperOpen = 1.0;
+                
+                this.initCanvasSize();
+            }
+
+            initCanvasSize() {
+                if (!this.canvas) return;
+                const rect = this.canvas.getBoundingClientRect();
+                this.width = rect.width || 300;
+                this.height = rect.height || 150;
+                this.dpr = window.devicePixelRatio || 1;
+                this.canvas.width = this.width * this.dpr;
+                this.canvas.height = this.height * this.dpr;
+                this.ctx.scale(this.dpr, this.dpr);
+            }
+
+            spawnParticles(x, y, color, count = 2) {
+                const geminiColors = ['#A8C7FA', '#C488F6', '#F43F5E', '#38BDF8', '#A855F7'];
+                for (let i = 0; i < count; i++) {
+                    this.particles.push({
+                        x, y,
+                        vx: (Math.random() - 0.5) * 2.0,
+                        vy: (Math.random() - 0.8) * 2.0,
+                        life: 1.0,
+                        decay: 0.02 + Math.random() * 0.03,
+                        color: color || geminiColors[Math.floor(Math.random() * geminiColors.length)],
+                        size: 1.5 + Math.random() * 2.5
+                    });
+                }
+            }
+
+            updateParticles() {
+                for (let i = this.particles.length - 1; i >= 0; i--) {
+                    const p = this.particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.life -= p.decay;
+                    if (p.life <= 0) this.particles.splice(i, 1);
+                }
+            }
+
+            cubicEase(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+
+            updateUIStatus(stepNum, stepText, timerText) {
+                const stepDot1 = document.getElementById('step-dot-1');
+                const stepDot2 = document.getElementById('step-dot-2');
+                const stepDot3 = document.getElementById('step-dot-3');
+                const stepDot4 = document.getElementById('step-dot-4');
+
+                const lbl1 = document.getElementById('step-lbl-1');
+                const lbl2 = document.getElementById('step-lbl-2');
+                const lbl3 = document.getElementById('step-lbl-3');
+                const lbl4 = document.getElementById('step-lbl-4');
+
+                const currentNameEl = document.getElementById('currentStepName');
+                const actionStatusEl = document.getElementById('robotActionStatus');
+                const modalStepEl = document.getElementById('modalStepText');
+                const progressTimerEl = document.getElementById('liveProgressTimer');
+
+                if (currentNameEl) currentNameEl.innerText = stepText;
+                if (actionStatusEl) actionStatusEl.innerText = `Gemini Vision Cell: ${stepText}`;
+                if (modalStepEl) modalStepEl.innerText = stepText.toUpperCase();
+                if (progressTimerEl) progressTimerEl.innerText = timerText;
+
+                const resetDots = () => {
+                    [stepDot1, stepDot2, stepDot3, stepDot4].forEach(dot => {
+                        if (dot) dot.className = "h-2 rounded-full bg-purple-500/20 transition-all duration-300";
+                    });
+                    [lbl1, lbl2, lbl3, lbl4].forEach(lbl => {
+                        if (lbl) lbl.className = "text-zat-textMuted";
+                    });
+                };
+
+                resetDots();
+
+                if (stepNum >= 1 && stepDot1 && lbl1) {
+                    stepDot1.className = "h-2 rounded-full bg-blue-400 shadow-sm shadow-blue-400 transition-all duration-300";
+                    lbl1.className = "text-blue-300 font-bold";
+                }
+                if (stepNum >= 2 && stepDot2 && lbl2) {
+                    stepDot2.className = "h-2 rounded-full bg-purple-400 shadow-sm shadow-purple-400 transition-all duration-300";
+                    lbl2.className = "text-purple-300 font-bold";
+                }
+                if (stepNum >= 3 && stepDot3 && lbl3) {
+                    stepDot3.className = "h-2 rounded-full bg-pink-400 shadow-sm shadow-pink-400 transition-all duration-300";
+                    lbl3.className = "text-pink-300 font-bold";
+                }
+                if (stepNum >= 4 && stepDot4 && lbl4) {
+                    stepDot4.className = "h-2 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400 transition-all duration-300";
+                    lbl4.className = "text-cyan-300 font-bold";
+                }
+            }
+
+            update() {
+                this.progress += 0.007;
+                this.conveyorOffset = (this.conveyorOffset + 0.8) % 20;
+
+                const boxSize = Math.min(this.width, this.height) * 0.20;
+                const chuteY = this.height * 0.68;
+                const pickX = this.width * 0.25;
+                const beltX = this.width * 0.72;
+                const beltY = this.height * 0.68;
+                const topArmY = this.height * 0.22;
+
+                const t = Math.min(1, Math.max(0, this.progress));
+                const easeT = this.cubicEase(t);
+
+                if (this.phase === 'SLIDE_IN') {
+                    // Smooth Transition: Arm glides back from conveyor (beltX) overhead to pick position (pickX)
+                    const startArmX = beltX;
+                    this.current.x = startArmX + easeT * (pickX - startArmX);
+                    // Slight parabolic overhead arc for natural robotic return motion
+                    this.current.y = topArmY - Math.sin(easeT * Math.PI) * 12;
+                    this.gripperOpen = 0.8 + easeT * 0.2; // Smoothly open claw
+
+                    // Next item slides smoothly into the pick bay from off-screen left
+                    const startX = -boxSize * 1.5;
+                    this.item.x = startX + easeT * (pickX - startX);
+                    this.item.y = chuteY;
+                    this.item.held = false;
+                    this.item.onBelt = false;
+
+                    this.updateUIStatus(1, 'Gemini Vision AI: Item Inbound', 'Status: VERIFYING');
+
+                    if (this.progress >= 1.0) {
+                        this.phase = 'DESCEND_PICK';
+                        this.progress = 0;
+                    }
+                } else if (this.phase === 'DESCEND_PICK') {
+                    this.item.x = pickX;
+                    this.item.y = chuteY;
+
+                    this.current.x = pickX;
+                    this.current.y = topArmY + easeT * (chuteY - topArmY - boxSize * 0.45);
+                    this.gripperOpen = 1.0 - easeT * 0.85;
+
+                    this.spawnParticles(this.current.x, this.current.y + 10, '#C488F6', 1);
+                    this.updateUIStatus(2, 'Gemini Soft-Touch Gripper Lock', 'Status: PICKING');
+
+                    if (this.progress >= 1.0) {
+                        this.phase = 'LIFT_ITEM';
+                        this.progress = 0;
+                        this.item.held = true;
+                    }
+                } else if (this.phase === 'LIFT_ITEM') {
+                    this.gripperOpen = 0.15;
+                    this.current.x = pickX;
+                    this.current.y = chuteY - boxSize * 0.45 - easeT * (chuteY - boxSize * 0.45 - topArmY);
+
+                    this.item.x = this.current.x;
+                    this.item.y = this.current.y + boxSize * 0.45;
+
+                    this.spawnParticles(this.current.x, this.current.y, '#F43F5E', 1);
+                    this.updateUIStatus(2, 'Lifting Item & Weight Verification', 'Status: LIFTING');
+
+                    if (this.progress >= 1.0) {
+                        this.phase = 'MOVE_BELT';
+                        this.progress = 0;
+                    }
+                } else if (this.phase === 'MOVE_BELT') {
+                    this.gripperOpen = 0.15;
+                    this.current.x = pickX + easeT * (beltX - pickX);
+                    this.current.y = topArmY + Math.sin(easeT * Math.PI) * -12;
+
+                    this.item.x = this.current.x;
+                    this.item.y = this.current.y + boxSize * 0.45;
+
+                    this.spawnParticles(this.current.x, this.current.y, '#38BDF8', 2);
+                    this.updateUIStatus(3, 'Transferring to Cold-Chain Conveyor', 'Status: PACKING');
+
+                    if (this.progress >= 1.0) {
+                        this.phase = 'LOWER_RELEASE';
+                        this.progress = 0;
+                    }
+                } else if (this.phase === 'LOWER_RELEASE') {
+                    this.current.x = beltX;
+                    this.current.y = topArmY + easeT * (beltY - topArmY - boxSize * 0.45);
+
+                    if (easeT < 0.7) {
+                        this.item.x = this.current.x;
+                        this.item.y = this.current.y + boxSize * 0.45;
+                        this.gripperOpen = 0.15;
+                    } else {
+                        this.item.x = beltX;
+                        this.item.y = beltY;
+                        this.item.held = false;
+                        this.item.onBelt = true;
+                        this.gripperOpen = 0.15 + (easeT - 0.7) * 2.8;
+                    }
+
+                    this.updateUIStatus(3, 'Releasing onto Express Line', 'Status: RELEASING');
+
+                    if (this.progress >= 1.0) {
+                        this.phase = 'SLIDE_OUT';
+                        this.progress = 0;
+                    }
+                } else if (this.phase === 'SLIDE_OUT') {
+                    // Arm ascends back to gantry height near beltX, ready for smooth overhead glide back to start
+                    this.current.x = beltX;
+                    this.current.y = beltY - boxSize * 0.45 - easeT * (beltY - boxSize * 0.45 - topArmY);
+                    this.gripperOpen = 0.8;
+
+                    // Delivered item smoothly rolls out to the right along conveyor
+                    this.item.x = beltX + easeT * (this.width + boxSize * 2 - beltX);
+                    this.item.y = beltY;
+
+                    this.spawnParticles(this.item.x, this.item.y, '#A8C7FA', 1);
+                    this.updateUIStatus(4, 'Routed to Pickup Station', 'Status: READY');
+
+                    if (this.progress >= 1.0) {
+                        // Seamless Loop Transition
+                        this.phase = 'SLIDE_IN';
+                        this.progress = 0;
+                        itemIndex = (itemIndex + 1) % ITEM_COLORS.length;
+                        this.item.type = ITEM_COLORS[itemIndex];
+
+                        const activeName = document.getElementById('activeItemName');
+                        if (activeName) activeName.innerText = this.item.type.name;
+                    }
+                }
+
+                this.updateParticles();
+            }
+
+            draw() {
+                if (!this.ctx) return;
+                const ctx = this.ctx;
+                ctx.clearRect(0, 0, this.width, this.height);
+
+                const boxSize = Math.min(this.width, this.height) * 0.20;
+                const chuteY = this.height * 0.68;
+                const pickX = this.width * 0.25;
+                const beltX = this.width * 0.72;
+                const beltY = this.height * 0.68;
+
+                // 1. Draw Background Grid (Gemini Dark Cyber-Lab Aesthetic)
+                ctx.strokeStyle = 'rgba(168, 85, 247, 0.08)';
+                ctx.lineWidth = 1;
+                const gridSize = 20;
+                for (let x = 0; x < this.width; x += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, this.height);
+                    ctx.stroke();
+                }
+                for (let y = 0; y < this.height; y += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(this.width, y);
+                    ctx.stroke();
+                }
+
+                // 2. Draw Supply Chute (Left Platform)
+                ctx.fillStyle = '#1e293b';
+                ctx.fillRect(0, chuteY + boxSize * 0.5, pickX + boxSize * 0.8, this.height - chuteY);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillRect(0, chuteY + boxSize * 0.5, pickX + boxSize * 0.8, 3);
+
+                // 3. Draw Conveyor Belt (Right Platform)
+                ctx.fillStyle = '#111827';
+                ctx.fillRect(beltX - boxSize * 0.8, beltY + boxSize * 0.5, this.width - beltX + boxSize * 1.5, this.height - beltY);
+                ctx.fillStyle = '#9333ea';
+                ctx.fillRect(beltX - boxSize * 0.8, beltY + boxSize * 0.5, this.width - beltX + boxSize * 1.5, 4);
+
+                // Animated Conveyor Roller Notches
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+                for (let bx = beltX - boxSize * 0.8 + this.conveyorOffset; bx < this.width; bx += 20) {
+                    ctx.fillRect(bx, beltY + boxSize * 0.5 + 4, 8, 3);
+                }
+
+                // 4. Draw Particles
+                this.particles.forEach(p => {
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.life;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                ctx.globalAlpha = 1.0;
+
+                // 5. Draw Grocery Item Box
+                if (this.item) {
+                    ctx.save();
+                    ctx.translate(this.item.x, this.item.y);
+
+                    // Item Glow Effect
+                    const glowGrad = ctx.createRadialGradient(0, 0, 2, 0, 0, boxSize);
+                    glowGrad.addColorStop(0, this.item.type.glow || 'rgba(168, 85, 247, 0.4)');
+                    glowGrad.addColorStop(1, 'transparent');
+                    ctx.fillStyle = glowGrad;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, boxSize * 1.2, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Item Container Box
+                    ctx.fillStyle = this.item.type.color || '#3b82f6';
+                    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+                    ctx.shadowBlur = 8;
+                    ctx.beginPath();
+                    ctx.roundRect(-boxSize * 0.4, -boxSize * 0.4, boxSize * 0.8, boxSize * 0.8, 8);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+
+                    // Box Border Highlight
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+
+                    // Item Emoji Icon
+                    ctx.font = `${boxSize * 0.45}px sans-serif`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(this.item.type.icon || '📦', 0, 2);
+
+                    ctx.restore();
+                }
+
+                // 6. Draw Overhead Robotic Gantry Rail
+                const topArmY = this.height * 0.22;
+                ctx.fillStyle = '#1e293b';
+                ctx.fillRect(0, topArmY - 6, this.width, 10);
+                
+                ctx.fillStyle = '#a855f7';
+                ctx.fillRect(0, topArmY - 2, this.width, 2);
+
+                // 7. Draw Robotic Arm Mechanism
+                const armX = this.current.x;
+                const armY = this.current.y;
+
+                // Top Gantry Carriage Slider
+                ctx.fillStyle = '#334155';
+                ctx.fillRect(armX - 16, topArmY - 8, 32, 14);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillRect(armX - 10, topArmY - 2, 20, 4);
+
+                // Vertical Telescopic Arm Shaft
+                const shaftGrad = ctx.createLinearGradient(armX - 4, 0, armX + 4, 0);
+                shaftGrad.addColorStop(0, '#64748b');
+                shaftGrad.addColorStop(0.5, '#f8fafc');
+                shaftGrad.addColorStop(1, '#334155');
+                ctx.fillStyle = shaftGrad;
+                ctx.fillRect(armX - 4, topArmY + 6, 8, Math.max(0, armY - topArmY));
+
+                // Laser Scanner Cone Beam
+                if (this.phase === 'DESCEND_PICK' || this.phase === 'LIFT_ITEM') {
+                    ctx.save();
+                    const beamGrad = ctx.createLinearGradient(armX, armY, armX, armY + 30);
+                    beamGrad.addColorStop(0, 'rgba(168, 85, 247, 0.4)');
+                    beamGrad.addColorStop(1, 'transparent');
+                    ctx.fillStyle = beamGrad;
+                    ctx.beginPath();
+                    ctx.moveTo(armX - 3, armY);
+                    ctx.lineTo(armX + 3, armY);
+                    ctx.lineTo(armX + 22, armY + 32);
+                    ctx.lineTo(armX - 22, armY + 32);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                // Robotic Wrist Joint
+                ctx.fillStyle = '#0f172a';
+                ctx.beginPath();
+                ctx.arc(armX, armY, 8, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#a855f7';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Gripper Fingers
+                const clawWidth = 10 + this.gripperOpen * 14;
+                ctx.strokeStyle = '#e2e8f0';
+                ctx.lineWidth = 3.5;
+                ctx.lineCap = 'round';
+
+                // Left Finger
+                ctx.beginPath();
+                ctx.moveTo(armX - 4, armY);
+                ctx.lineTo(armX - clawWidth, armY + 10);
+                ctx.lineTo(armX - clawWidth * 0.8, armY + 20);
+                ctx.stroke();
+
+                // Right Finger
+                ctx.beginPath();
+                ctx.moveTo(armX + 4, armY);
+                ctx.lineTo(armX + clawWidth, armY + 10);
+                ctx.lineTo(armX + clawWidth * 0.8, armY + 20);
+                ctx.stroke();
+            }
+        }
+
+        // Global Simulator Instances
+        let mainSimulator = null;
+        let modalSimulator = null;
+        let animFrameId = null;
+
+        function renderSimulators() {
+            if (mainSimulator) {
+                mainSimulator.update();
+                mainSimulator.draw();
+            }
+            if (modalSimulator && !document.getElementById('robotModal').classList.contains('hidden')) {
+                modalSimulator.update();
+                modalSimulator.draw();
+            }
+            animFrameId = requestAnimationFrame(renderSimulators);
+        }
+
+        function initSimulators() {
+            mainSimulator = new RobotArmSimulator('robotCanvas');
+            modalSimulator = new RobotArmSimulator('robotModalCanvas');
+            if (animFrameId) cancelAnimationFrame(animFrameId);
+            renderSimulators();
+        }
+
+        function renderFlashDeals() {
+            const container = document.getElementById('flashDealsContainer');
+            if (!container) return;
+
+            const flashItems = PRODUCTS.filter(p => p.isRescue);
+            container.innerHTML = flashItems.map(p => `
+                <div class="luxury-card flex-shrink-0 w-48 sm:w-56 p-3 rounded-2xl flex flex-col justify-between space-y-2 group">
+                    <div class="relative h-32 rounded-xl overflow-hidden bg-black/40">
+                        <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        <span class="absolute top-2 left-2 shopee-badge text-white font-mono font-bold text-[9px] px-2 py-0.5 rounded-md shadow">${p.discount}</span>
+                    </div>
+                    <div>
+                        <div class="text-[9px] font-mono text-zat-gold uppercase tracking-wider font-bold">${p.tag}</div>
+                        <h3 class="text-xs font-bold text-white line-clamp-1 group-hover:text-blue-300 transition">${p.name}</h3>
+                        <p class="text-[10px] text-zat-textMuted">${p.origin}</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-1 border-t border-white/10">
+                        <div>
+                            <span class="font-mono font-extrabold text-sm text-white">S$${p.price.toFixed(2)}</span>
+                            <span class="font-mono text-[10px] text-zat-textMuted line-through ml-1">S$${p.origPrice.toFixed(2)}</span>
+                        </div>
+                        <button onclick="addToCart('${p.id}')" class="fairprice-emerald hover:opacity-90 text-white w-8 h-8 rounded-xl flex items-center justify-center transition shadow">
+                            <i class="fa-solid fa-cart-plus text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            if (!grid) return;
+
+            let filtered = PRODUCTS;
+            if (state.selectedCategory !== 'all') {
+                filtered = filtered.filter(p => p.cat === state.selectedCategory);
+            }
+            if (state.searchQuery.trim() !== '') {
+                const q = state.searchQuery.toLowerCase();
+                filtered = filtered.filter(p => p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-zat-textMuted space-y-2">
+                        <i class="fa-solid fa-magnifying-glass text-3xl text-purple-400"></i>
+                        <p class="text-sm font-bold text-white">No darkstore items matched your search.</p>
+                        <button onclick="setCategory('all')" class="text-xs text-blue-300 underline font-bold">Clear Filters</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="luxury-card p-3.5 rounded-2xl flex flex-col justify-between space-y-2.5 group">
+                    <div class="relative h-36 sm:h-40 rounded-xl overflow-hidden bg-black/40">
+                        <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        <span class="absolute top-2 left-2 ${p.isRescue ? 'shopee-badge' : 'bg-blue-600'} text-white font-mono font-bold text-[9px] px-2 py-0.5 rounded-md shadow">${p.tag}</span>
+                        <div class="absolute bottom-2 right-2 bg-black/80 backdrop-blur px-2 py-0.5 rounded-md text-[9px] font-mono text-zat-gold flex items-center space-x-1">
+                            <i class="fa-solid fa-star text-[8px]"></i>
+                            <span>${p.rating}</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h3 class="text-xs sm:text-sm font-bold text-white group-hover:text-purple-300 transition line-clamp-1">${p.name}</h3>
+                        <p class="text-[10px] text-zat-textMuted line-clamp-2">${p.desc}</p>
+                    </div>
+
+                    <div class="space-y-2 pt-1 border-t border-white/10">
+                        <div class="flex items-baseline justify-between">
+                            <div>
+                                <span class="font-mono font-extrabold text-sm sm:text-base text-white">S$${p.price.toFixed(2)}</span>
+                                <span class="font-mono text-[10px] text-zat-textMuted line-through ml-1">S$${p.origPrice.toFixed(2)}</span>
+                            </div>
+                            <span class="text-[9px] font-mono text-blue-300">${p.sold} sold</span>
+                        </div>
+
+                        <button onclick="addToCart('${p.id}')" class="w-full fairprice-emerald hover:opacity-90 text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center space-x-1.5 transition shadow">
+                            <i class="fa-solid fa-cart-plus text-xs"></i>
+                            <span>Add to Cart</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setCategory(cat) {
+            state.selectedCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.className = "cat-btn fairprice-emerald text-white px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition shadow";
+                } else {
+                    btn.className = "cat-btn bg-zat-card hover:bg-zat-cardBorder text-zat-textMuted border border-white/10 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition";
+                }
+            });
+            renderProducts();
+        }
+
+        function filterProducts() {
+            const input = document.getElementById('searchInput');
+            if (input) {
+                state.searchQuery = input.value;
+                renderProducts();
+            }
+        }
+
+        function addToCart(id) {
+            const product = PRODUCTS.find(p => p.id === id);
+            if (!product) return;
+
+            const existing = state.cart.find(item => item.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                state.cart.push({ ...product, qty: 1 });
+            }
+
+            updateCartUI();
+            showToast(`Added ${product.name} to bag!`);
+        }
+
+        function updateCartQty(id, delta) {
+            const item = state.cart.find(i => i.id === id);
+            if (!item) return;
+
+            item.qty += delta;
+            if (item.qty <= 0) {
+                state.cart = state.cart.filter(i => i.id !== id);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadgeCount');
+            const mobileBadge = document.getElementById('mobileCartBadge');
+            const totalCount = state.cart.reduce((sum, item) => sum + item.qty, 0);
+            
+            if (badge) badge.innerText = totalCount;
+            if (mobileBadge) mobileBadge.innerText = totalCount;
+
+            const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const origTotal = state.cart.reduce((sum, item) => sum + (item.origPrice * item.qty), 0);
+            const savings = origTotal - subtotal;
+            const coinsEarned = Math.floor(subtotal * 10);
+            const gst = subtotal * 0.09;
+
+            let voucherDiscount = 0;
+            if (state.appliedVoucher === 'ZATEXPRESS5') voucherDiscount = 5;
+            if (state.appliedVoucher === 'RESCUEHERO10') voucherDiscount = 10;
+
+            const finalTotal = Math.max(0, subtotal - voucherDiscount);
+
+            const headerTotalEl = document.getElementById('cartHeaderTotal');
+            if (headerTotalEl) headerTotalEl.innerText = `S$${finalTotal.toFixed(2)}`;
+
+            const subtotalEl = document.getElementById('cartSubtotal');
+            const discountEl = document.getElementById('cartDiscount');
+            const voucherDiscountEl = document.getElementById('cartVoucherDiscount');
+            const coinsEarnedEl = document.getElementById('cartCoinsEarned');
+            const gstEl = document.getElementById('cartGst');
+            const totalEl = document.getElementById('cartTotal');
+
+            if (subtotalEl) subtotalEl.innerText = `S$${subtotal.toFixed(2)}`;
+            if (discountEl) discountEl.innerText = `-S$${savings.toFixed(2)}`;
+            if (voucherDiscountEl) voucherDiscountEl.innerText = `-S$${voucherDiscount.toFixed(2)}`;
+            if (coinsEarnedEl) coinsEarnedEl.innerText = `+${coinsEarned} 🪙`;
+            if (gstEl) gstEl.innerText = `S$${gst.toFixed(2)}`;
+            if (totalEl) totalEl.innerText = `S$${finalTotal.toFixed(2)}`;
+
+            const container = document.getElementById('cartItemsContainer');
+            if (container) {
+                if (state.cart.length === 0) {
+                    container.innerHTML = `
+                        <div class="py-12 text-center text-zat-textMuted space-y-2">
+                            <i class="fa-solid fa-cart-flatbed text-3xl text-purple-400"></i>
+                            <p class="text-xs font-bold text-white">Your shopping bag is empty.</p>
+                            <p class="text-[10px]">Select fresh produce to start robot assembly.</p>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = state.cart.map(item => `
+                        <div class="bg-zat-card/80 border border-white/10 p-2.5 rounded-2xl flex items-center justify-between space-x-3">
+                            <img src="${item.img}" alt="${item.name}" class="w-12 h-12 rounded-xl object-cover flex-shrink-0">
+                            <div class="flex-grow min-w-0">
+                                <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
+                                <div class="text-[10px] font-mono text-zat-gold">S$${item.price.toFixed(2)} each</div>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-zat-bg border border-white/10 rounded-xl px-2 py-1">
+                                <button onclick="updateCartQty('${item.id}', -1)" class="text-zat-textMuted hover:text-white px-1 font-bold">-</button>
+                                <span class="font-mono text-xs font-bold text-white">${item.qty}</span>
+                                <button onclick="updateCartQty('${item.id}', 1)" class="text-zat-textMuted hover:text-white px-1 font-bold">+</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            saveState();
+        }
+
+        function setFulfillmentMode(mode) {
+            state.fulfillmentMode = mode;
+            const delBtn = document.getElementById('modeDeliveryBtn');
+            const picBtn = document.getElementById('modePickupBtn');
+            const cartLabel = document.getElementById('cartFulfillmentLabel');
+
+            if (mode === 'delivery') {
+                if (delBtn) delBtn.className = "flex items-center space-x-2 px-3 py-1.5 rounded-xl font-bold transition fairprice-emerald text-white shadow";
+                if (picBtn) picBtn.className = "flex items-center space-x-2 px-3 py-1.5 rounded-xl font-medium text-zat-textMuted hover:text-white transition";
+                if (cartLabel) cartLabel.innerText = "30m Express Delivery";
+            } else {
+                if (picBtn) picBtn.className = "flex items-center space-x-2 px-3 py-1.5 rounded-xl font-bold transition fairprice-emerald text-white shadow";
+                if (delBtn) delBtn.className = "flex items-center space-x-2 px-3 py-1.5 rounded-xl font-medium text-zat-textMuted hover:text-white transition";
+                if (cartLabel) cartLabel.innerText = "Robot Locker Pickup";
+            }
+        }
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            const backdrop = document.getElementById('cartDrawerBackdrop');
+            if (!drawer || !backdrop) return;
+
+            if (drawer.classList.contains('translate-x-full')) {
+                drawer.classList.remove('translate-x-full');
+                backdrop.classList.remove('hidden');
+                setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+            } else {
+                drawer.classList.add('translate-x-full');
+                backdrop.classList.add('opacity-0');
+                setTimeout(() => backdrop.classList.add('hidden'), 300);
+            }
+        }
+
+        function toggleHubDropdown() {
+            const dropdown = document.getElementById('hubDropdown');
+            if (dropdown) dropdown.classList.toggle('hidden');
+        }
+
+        function selectHub(hubName) {
+            state.selectedHub = hubName;
+            const selectedHubText = document.getElementById('selectedHubText');
+            const cartDrawerHubText = document.getElementById('cartDrawerHubText');
+            const robotUnitLabel = document.getElementById('robotUnitLabel');
+
+            if (selectedHubText) selectedHubText.innerText = hubName;
+            if (cartDrawerHubText) cartDrawerHubText.innerText = hubName;
+            if (robotUnitLabel) robotUnitLabel.innerText = `Gemini Bipedal Robot • ${hubName}`;
+
+            toggleHubDropdown();
+            showToast(`Selected darkstore: ${hubName}`);
+        }
+
+        function toggleRobotModal() {
+            const modal = document.getElementById('robotModal');
+            if (!modal) return;
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden') && modalSimulator) {
+                modalSimulator.initCanvasSize();
+            }
+        }
+
+        function openCoinModal() {
+            const modal = document.getElementById('coinModal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeCoinModal() {
+            const modal = document.getElementById('coinModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function claimDailyCheckIn() {
+            if (state.hasCheckedInToday) {
+                showToast("Already claimed today's +50 coins!");
+                return;
+            }
+            state.hasCheckedInToday = true;
+            state.userCoins += 50;
+            updateCoinDisplay();
+            showToast("Claimed daily +50 ZAT Coins!");
+        }
+
+        function redeemCoinReward(cost, voucherCode) {
+            if (state.userCoins < cost) {
+                showToast("Insufficient ZAT Coins balance!");
+                return;
+            }
+            state.userCoins -= cost;
+            state.appliedVoucher = voucherCode;
+            updateCoinDisplay();
+            updateCartUI();
+            showToast(`Redeemed ${voucherCode}! Voucher applied.`);
+        }
+
+        function redeemFreeItem(productId, coinCost) {
+            if (state.userCoins < coinCost) {
+                showToast("Insufficient ZAT Coins balance!");
+                return;
+            }
+            state.userCoins -= coinCost;
+            addToCart(productId);
+            updateCoinDisplay();
+            showToast("Free reward item added to bag!");
+        }
+
+        function updateCoinDisplay() {
+            const topBar = document.getElementById('topBarCoinBalance');
+            const modalBalance = document.getElementById('modalCoinBalance');
+            if (topBar) topBar.innerText = state.userCoins.toLocaleString();
+            if (modalBalance) modalBalance.innerText = state.userCoins.toLocaleString();
+        }
+
+        function openAiModal() {
+            const modal = document.getElementById('aiModal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeAiModal() {
+            const modal = document.getElementById('aiModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function switchAiTab(tab) {
+            const presets = document.getElementById('aiTabPresets');
+            const photo = document.getElementById('aiTabPhoto');
+            const prompt = document.getElementById('aiTabPrompt');
+
+            const btnPresets = document.getElementById('aiTabPresetsBtn');
+            const btnPhoto = document.getElementById('aiTabPhotoBtn');
+            const btnPrompt = document.getElementById('aiTabPromptBtn');
+
+            [presets, photo, prompt].forEach(el => el && el.classList.add('hidden'));
+
+            if (tab === 'presets' && presets) presets.classList.remove('hidden');
+            if (tab === 'photo' && photo) photo.classList.remove('hidden');
+            if (tab === 'prompt' && prompt) prompt.classList.remove('hidden');
+
+            const activeClass = "flex-1 py-2 rounded-xl font-bold transition fairprice-emerald text-white shadow text-center";
+            const inactiveClass = "flex-1 py-2 rounded-xl font-medium text-zat-textMuted hover:text-white transition text-center";
+
+            if (btnPresets) btnPresets.className = tab === 'presets' ? activeClass : inactiveClass;
+            if (btnPhoto) btnPhoto.className = tab === 'photo' ? activeClass : inactiveClass;
+            if (btnPrompt) btnPrompt.className = tab === 'prompt' ? activeClass : inactiveClass;
+        }
+
+        function selectAiPreset(key) {
+            const preset = AI_PRESETS[key];
+            if (!preset) return;
+
+            const items = PRODUCTS.filter(p => preset.items.includes(p.id));
+            state.aiMatchedProducts = items;
+            displayAiResults(preset.title, items);
+        }
+
+        function generateAiIngredients() {
+            const input = document.getElementById('aiDishInput');
+            const query = input ? input.value.trim() : '';
+            const matched = PRODUCTS.slice(0, 3);
+            state.aiMatchedProducts = matched;
+            displayAiResults(query || "Custom AI Dish Match", matched);
+        }
+
+        function simulatePhotoUpload() {
+            showToast("Gemini Vision analyzing food photo...");
+            setTimeout(() => {
+                const matched = [PRODUCTS[1], PRODUCTS[2], PRODUCTS[12]];
+                state.aiMatchedProducts = matched;
+                displayAiResults("Visual Photo Analysis Match", matched);
+            }, 800);
+        }
+
+        function displayAiResults(title, items) {
+            const container = document.getElementById('aiResultsContainer');
+            const titleEl = document.getElementById('aiMatchedTitle');
+            const listEl = document.getElementById('aiMatchedItemsList');
+
+            if (!container || !titleEl || !listEl) return;
+
+            titleEl.innerText = `Ingredients for: ${title}`;
+            listEl.innerHTML = items.map(p => `
+                <div class="bg-zat-bg/80 border border-white/10 p-3 rounded-2xl flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <img src="${p.img}" alt="${p.name}" class="w-10 h-10 rounded-xl object-cover">
+                        <div>
+                            <div class="text-xs font-bold text-white">${p.name}</div>
+                            <div class="text-[10px] text-zat-textMuted">${p.origin} • S$${p.price.toFixed(2)}</div>
+                        </div>
+                    </div>
+                    <button onclick="addToCart('${p.id}')" class="shopee-badge hover:opacity-90 text-white font-bold px-3 py-1.5 rounded-xl text-xs shadow transition">
+                        + Add
+                    </button>
+                </div>
+            `).join('');
+
+            container.classList.remove('hidden');
+        }
+
+        function addAllAiItemsToCart() {
+            if (!state.aiMatchedProducts || state.aiMatchedProducts.length === 0) return;
+            state.aiMatchedProducts.forEach(p => addToCart(p.id));
+            closeAiModal();
+            toggleCartDrawer();
+            showToast("Added all recipe ingredients to bag!");
+        }
+
+        function processPreOrder() {
+            if (state.cart.length === 0) {
+                showToast("Please add items to your shopping bag first.");
+                return;
+            }
+
+            const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            let voucherDiscount = 0;
+            if (state.appliedVoucher === 'ZATEXPRESS5') voucherDiscount = 5;
+            if (state.appliedVoucher === 'RESCUEHERO10') voucherDiscount = 10;
+            const finalTotal = Math.max(0, subtotal - voucherDiscount);
+            const coinsEarned = Math.floor(subtotal * 10);
+
+            const modal = document.getElementById('pickupPassModal');
+            const passStation = document.getElementById('passStation');
+            const passTotal = document.getElementById('passTotal');
+            const passCoinsEarned = document.getElementById('passCoinsEarned');
+
+            if (passStation) passStation.innerText = state.selectedHub;
+            if (passTotal) passTotal.innerText = `S$${finalTotal.toFixed(2)}`;
+            if (passCoinsEarned) passCoinsEarned.innerText = `+${coinsEarned} 🪙`;
+
+            state.userCoins += coinsEarned;
+            updateCoinDisplay();
+
+            if (modal) modal.classList.remove('hidden');
+            
+            // Reset Cart
+            state.cart = [];
+            state.appliedVoucher = null;
+            updateCartUI();
+            toggleCartDrawer();
+        }
+
+        function closePickupModal() {
+            const modal = document.getElementById('pickupPassModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function claimVoucher(code) {
+            state.appliedVoucher = code;
+            updateCartUI();
+            showToast(`Voucher ${code} claimed!`);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            if (!toast || !toastMsg) return;
+
+            toastMsg.innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+
+        function startCountdown() {
+            let totalSecs = 16125;
+            setInterval(() => {
+                if (totalSecs <= 0) return;
+                totalSecs--;
+                const h = Math.floor(totalSecs / 3600);
+                const m = Math.floor((totalSecs % 3600) / 60);
+                const s = totalSecs % 60;
+
+                const hEl = document.getElementById('countdownHours');
+                const mEl = document.getElementById('countdownMins');
+                const sEl = document.getElementById('countdownSecs');
+
+                if (hEl) hEl.innerText = String(h).padStart(2, '0');
+                if (mEl) mEl.innerText = String(m).padStart(2, '0');
+                if (sEl) sEl.innerText = String(s).padStart(2, '0');
+            }, 1000);
+        }
+
+        function startPrepTimer() {
+            setInterval(() => {
+                if (state.prepSecondsRemaining > 0) {
+                    state.prepSecondsRemaining--;
+                } else {
+                    state.prepSecondsRemaining = 105;
+                }
+                const m = Math.floor(state.prepSecondsRemaining / 60);
+                const s = state.prepSecondsRemaining % 60;
+                const formatted = `${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s Remaining`;
+
+                const estStatus = document.getElementById('estPrepTimerStatus');
+                const passTimer = document.getElementById('passPrepTimer');
+
+                if (estStatus) estStatus.innerText = formatted;
+                if (passTimer) passTimer.innerText = formatted;
+            }, 1000);
+        }
+
+        function saveState() {
+            localStorage.setItem('ZAT_GROCERY_STATE', JSON.stringify({
+                cart: state.cart,
+                userCoins: state.userCoins,
+                selectedHub: state.selectedHub
+            }));
+        }
+
+        function loadSavedState() {
+            const saved = localStorage.getItem('ZAT_GROCERY_STATE');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    if (parsed.cart) state.cart = parsed.cart;
+                    if (parsed.userCoins) state.userCoins = parsed.userCoins;
+                    if (parsed.selectedHub) selectHub(parsed.selectedHub);
+                } catch (e) {
+                    console.error("Could not parse saved state:", e);
+                }
+            }
+        }
+
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSavedState();
+            renderFlashDeals();
+            renderProducts();
+            updateCartUI();
+            updateCoinDisplay();
+            initSimulators();
+            startCountdown();
+            startPrepTimer();
+
+            window.addEventListener('resize', () => {
+                if (mainSimulator) mainSimulator.initCanvasSize();
+                if (modalSimulator) modalSimulator.initCanvasSize();
+            });
+        });
+    </script>
+</body>
+</html>
